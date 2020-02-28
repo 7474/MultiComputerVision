@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlazorMultiComputerVisionServer.Areas.Identity;
 using BlazorMultiComputerVisionServer.Data;
+using BlazorMultiComputerVisionServer.Service;
 
 namespace BlazorMultiComputerVisionServer
 {
@@ -40,6 +41,11 @@ namespace BlazorMultiComputerVisionServer
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
+
+            services.AddSingleton<IUploadService>(new BlobUploadService(
+                            Configuration.GetConnectionString("BlobStorage"),
+                            Configuration.GetValue<string>("Blob:ContainerName")
+                            ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

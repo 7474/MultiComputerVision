@@ -1,0 +1,26 @@
+﻿@page "/upload"
+
+@using BlazorMultiComputerVisionServer.Service
+@inject IUploadService UploadService
+
+<h1>Upload</h1>
+<InputFile OnChange="HandleFileSelected" />
+<p>
+    @UploadedUri
+    <img src="@UploadedUri" />
+</p>
+
+@code {
+    System.IO.FileStream SelectedFileStream { set; get; }
+    double PercentageProgress { set; get; }
+    string UploadedUri { set; get; }
+
+    async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        foreach (var file in files)
+        {
+            var blob = await UploadService.Upload(file.Data, file.Name, "");
+            UploadedUri = blob.Uri.ToString();
+        }
+    }
+}
