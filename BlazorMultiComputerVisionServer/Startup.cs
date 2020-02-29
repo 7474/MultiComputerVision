@@ -16,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using BlazorMultiComputerVisionServer.Areas.Identity;
 using BlazorMultiComputerVisionServer.Data;
 using BlazorMultiComputerVisionServer.Service;
+using Amazon.Runtime;
 
 namespace BlazorMultiComputerVisionServer
 {
@@ -50,6 +51,10 @@ namespace BlazorMultiComputerVisionServer
                             Configuration.GetValue<string>("AzureCognitiveConfig:ComputerVisionSubscriptionKey"),
                             Configuration.GetValue<string>("AzureCognitiveConfig:ComputerVisionEndpoint")
                             ));
+            services.AddSingleton(new AwsImageDetectService(new BasicAWSCredentials(
+                            Configuration.GetValue<string>("AWS:AccessKeyID"),
+                            Configuration.GetValue<string>("AWS:SecretAccessKey")
+                )));
             var cosmos = new CosmosResultRepositoryService(Configuration.GetConnectionString("AzureCosmos"));
             cosmos.Initialize("MultiComputerVision");
             services.AddSingleton<IResultRepositoryService>(cosmos);

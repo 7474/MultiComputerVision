@@ -13,7 +13,8 @@ namespace BlazorMultiComputerVisionServer.Service
 
     public enum ImageDetector
     {
-        AzureCognitiveServicesComputerVision
+        AzureCognitiveServicesComputerVision,
+        AwsAmazonRekognition
     }
 
     public interface IImageDetectResult

@@ -3,6 +3,7 @@
 @using BlazorMultiComputerVisionServer.Service
 @inject IUploadService UploadService
 @inject AzureImageDetectService AzureImageDetectService
+@inject AwsImageDetectService AwsImageDetectService
 @inject IResultRepositoryService ResultRepositoryService
 @inject NavigationManager NavigationManager
 
@@ -34,8 +35,9 @@
 
             var blob = await UploadService.UploadFile(file.Data, file.Name, true);
             var azureResult = await AzureImageDetectService.Detect(blob.Uri.ToString());
+            var awsResult = await AwsImageDetectService.Detect(blob.Uri.ToString());
 
-            var doc = ResultRepositoryService.BuildResult("koudenpa", blob, new IImageDetectResult[] { azureResult });
+            var doc = ResultRepositoryService.BuildResult("koudenpa", blob, new IImageDetectResult[] { azureResult, awsResult });
             await ResultRepositoryService.Put(doc);
 
             Message = "Complete!";
