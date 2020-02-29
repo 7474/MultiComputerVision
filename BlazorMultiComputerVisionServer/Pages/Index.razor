@@ -1,5 +1,61 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
+@using BlazorMultiComputerVisionServer.Service
+@inject IResultRepositoryService ResultRepositoryService
 
-Welcome to your new app.
+<h1>コンピュータの目</h1>
+
+@if (docs == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="d-flex flex-wrap">
+        @foreach (var doc in docs)
+        {
+            <NavLink href="@($"/results/{doc.Id}")" style="margin: 4px;">
+                <img src="@doc.Image.Uri" class="img-thumbnail" style="min-width: 120px; max-width: 120px;">
+            </NavLink>
+        }
+    </div>
+    if (next < DateTimeOffset.MaxValue)
+    {
+        <p>
+            <NavLink href="@($"/results?offset={next.UtcTicks}")" class="btn btn-link">More</NavLink>
+        </p>
+    }
+}
+<div>@message</div>
+
+@code {
+    ICollection<IResultDocument> docs { get; set; }
+    DateTimeOffset next { get; set; }
+    string message { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        try
+        {
+            docs = await ResultRepositoryService.GetResults(DateTimeOffset.MinValue);
+            if (docs.Count > 0)
+            {
+                next = docs.Max(x => x.CreatedAt);
+            }
+            else
+            {
+                next = DateTimeOffset.MaxValue;
+            }
+        }
+        catch (Exception ex)
+        {
+            // XXX 500放れるといい
+            message = ex.Message + " ... " + ex.StackTrace;
+        }
+    }
+}
