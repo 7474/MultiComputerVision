@@ -6,28 +6,18 @@
 @inject IResultRepositoryService ResultRepositoryService
 @inject NavigationManager NavigationManager
 
-<h1>Upload</h1>
+<h1>コンピュータの目に判断を仰ぐ</h1>
+<div class="alert alert-info" role="alert">
+    画像を選択すると判断してくれます。
+</div>
 <InputFile OnChange="HandleFileSelected" />
 <div>
     <p>@Message</p>
-    <dl>
-        <dt>URL</dt>
-        <dd>@UploadedUri</dd>
-        <dt>AzureAdultScore</dt>
-        <dd>@AzureAdultScore</dd>
-        <dt>AzureRacyScore</dt>
-        <dd>@AzureRacyScore</dd>
-        <dt>Image</dt>
-        <dd><img src="@UploadedUri" style="max-width: 100%" /></dd>
-    </dl>
 </div>
 
 @code {
     System.IO.FileStream SelectedFileStream { set; get; }
     double PercentageProgress { set; get; }
-    string UploadedUri { set; get; }
-    double AzureAdultScore { set; get; }
-    double AzureRacyScore { set; get; }
     string Message { get; set; }
 
     async Task HandleFileSelected(IFileListEntry[] files)
@@ -43,10 +33,7 @@
             var file = files.First();
 
             var blob = await UploadService.UploadFile(file.Data, file.Name, true);
-            UploadedUri = blob.Uri.ToString();
-            var azureResult = await AzureImageDetectService.Detect(UploadedUri);
-            AzureAdultScore = azureResult.AdultScore;
-            AzureRacyScore = azureResult.RacyScore;
+            var azureResult = await AzureImageDetectService.Detect(blob.Uri.ToString());
 
             var doc = ResultRepositoryService.BuildResult("koudenpa", blob, new IImageDetectResult[] { azureResult });
             await ResultRepositoryService.Put(doc);

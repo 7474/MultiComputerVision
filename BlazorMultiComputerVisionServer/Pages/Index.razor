@@ -3,8 +3,15 @@
 @using BlazorMultiComputerVisionServer.Service
 @inject IResultRepositoryService ResultRepositoryService
 
-<h1>コンピュータの目</h1>
+<div class="jumbotron">
+    <h1>コンピュータの目</h1>
+    <p class="lead">その画像はコンピュータの目にはどのように映っているのでしょうか？　公平な目線で判断してくれます。</p>
+    <p class="lead">
+        <NavLink href="/upload" class="btn btn-primary">判断を仰ぎに行く</NavLink>
+    </p>
+</div>
 
+<h2>最近の判断結果</h2>
 @if (docs == null)
 {
     <p><em>Loading...</em></p>
