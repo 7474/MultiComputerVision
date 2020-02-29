@@ -3,10 +3,12 @@
 @using BlazorMultiComputerVisionServer.Service
 @inject IUploadService UploadService
 @inject AzureImageDetectService AzureImageDetectService
+@inject IResultRepositoryService ResultRepositoryService
 
 <h1>Upload</h1>
 <InputFile OnChange="HandleFileSelected" />
 <div>
+    <p>@Message</p>
     <dl>
         <dt>URL</dt>
         <dd>@UploadedUri</dd>
@@ -17,7 +19,6 @@
         <dt>Image</dt>
         <dd><img src="@UploadedUri" style="max-width: 100%" /></dd>
     </dl>
-    <p>@Message</p>
 </div>
 
 @code {
@@ -35,15 +36,21 @@
             // TODO 画像サイズはノーマライズしたい
             // TODO 画像以外はアップロード駄目だろう
             // TODO ディレクトリ指定できた方が管理上良さそう
-            foreach (var file in files)
-            {
-                var blob = await UploadService.UploadFile(file.Data, file.Name, true);
-                UploadedUri = blob.Uri.ToString();
-                var azureResult = await AzureImageDetectService.Detect(UploadedUri);
-                AzureAdultScore = azureResult.AdultScore;
-                AzureRacyScore = azureResult.RacyScore;
-            }
-            Message = "Complete";
+            // TODO オーナー名、認証されたユーザーに
+            // TODO そもそも認証されたユーザーだけ使えるように
+            Message = "Processing...";
+            var file = files.First();
+
+            var blob = await UploadService.UploadFile(file.Data, file.Name, true);
+            UploadedUri = blob.Uri.ToString();
+            var azureResult = await AzureImageDetectService.Detect(UploadedUri);
+            AzureAdultScore = azureResult.AdultScore;
+            AzureRacyScore = azureResult.RacyScore;
+
+            var doc = ResultRepositoryService.BuildResult("koudenpa", blob, new IImageDetectResult[] { azureResult });
+            await ResultRepositoryService.Put(doc);
+
+            Message = "Complete!";
         }
         catch (Exception ex)
         {

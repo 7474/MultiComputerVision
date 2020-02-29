@@ -50,6 +50,9 @@ namespace BlazorMultiComputerVisionServer
                             Configuration.GetValue<string>("AzureCognitiveConfig:ComputerVisionSubscriptionKey"),
                             Configuration.GetValue<string>("AzureCognitiveConfig:ComputerVisionEndpoint")
                             ));
+            var cosmos = new CosmosResultRepositoryService(Configuration.GetConnectionString("AzureCosmos"));
+            cosmos.Initialize("MultiComputerVision");
+            services.AddSingleton<IResultRepositoryService>(cosmos);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
