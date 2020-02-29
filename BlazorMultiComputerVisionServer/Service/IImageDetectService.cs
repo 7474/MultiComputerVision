@@ -11,8 +11,15 @@ namespace BlazorMultiComputerVisionServer.Service
         Task<IImageDetectResult> Detect(string uri);
     }
 
+    public enum ImageDetector
+    {
+        AzureCognitiveServicesComputerVision
+    }
+
     public interface IImageDetectResult
     {
+        ImageDetector Detector { get; }
+
         bool IsAdultContent { get; }
         bool IsRacyContent { get; }
         double AdultScore { get; }

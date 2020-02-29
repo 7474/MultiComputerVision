@@ -47,6 +47,8 @@ namespace BlazorMultiComputerVisionServer.Service
 
     public class AzureImageDetectResult : IImageDetectResult
     {
+        public ImageDetector Detector => ImageDetector.AzureCognitiveServicesComputerVision;
+
         public bool IsAdultContent { get; set; }
         public bool IsRacyContent { get; set; }
         public double AdultScore { get; set; }
