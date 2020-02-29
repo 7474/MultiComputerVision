@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Cosmos;
+using Microsoft.Azure.Cosmos.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -47,10 +48,12 @@ namespace BlazorMultiComputerVisionServer.Service
             var res = await resultContainer.CreateItemAsync(doc as ResultDocument);
         }
 
-        public Task<IResultDocument> GetResult(Guid id)
+        public async Task<IResultDocument> GetResult(Guid id)
         {
-            var res = resultContainer.GetItemLinqQueryable<ResultDocument>().Where(x => x.Id == id).FirstOrDefault();
-            return Task.FromResult(res as IResultDocument);
+            // To execute LINQ query please set allowSynchronousQueryExecution true
+            // or use GetItemQueryIterator to execute asynchronously
+            var res = await resultContainer.GetItemLinqQueryable<ResultDocument>().Where(x => x.Id == id).ToFeedIterator().ReadNextAsync();
+            return res.FirstOrDefault();
         }
     }
 

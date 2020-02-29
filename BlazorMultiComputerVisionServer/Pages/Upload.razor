@@ -4,6 +4,7 @@
 @inject IUploadService UploadService
 @inject AzureImageDetectService AzureImageDetectService
 @inject IResultRepositoryService ResultRepositoryService
+@inject NavigationManager NavigationManager
 
 <h1>Upload</h1>
 <InputFile OnChange="HandleFileSelected" />
@@ -51,6 +52,8 @@
             await ResultRepositoryService.Put(doc);
 
             Message = "Complete!";
+
+            NavigationManager.NavigateTo($"/results/{doc.Id.ToString()}");
         }
         catch (Exception ex)
         {

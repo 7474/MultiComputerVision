@@ -1,0 +1,81 @@
+﻿@page "/results/{id}"
+
+@using BlazorMultiComputerVisionServer.Extension
+@using BlazorMultiComputerVisionServer.Service
+@inject IResultRepositoryService ResultRepositoryService
+
+<h1>@title</h1>
+
+@if (doc == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <table class="table">
+            <thead>
+                <tr><th>判定者</th><th>性的？</th><th>えっち？</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var result in doc.Results)
+                {
+                    <tr>
+                        <td>@getDetectorNickName(result.Detector)</td>
+                        <td>
+                            @(result.IsAdultContent ? "✖" : "✔")
+                            （@(Math.Round(result.AdultScore * 100))点）
+                        </td>
+                        <td>
+                            @(result.IsRacyContent ? "✖" : "✔")
+                            （@(Math.Round(result.RacyScore * 100))点）
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <img src="@doc.Image.Uri" style="max-width: 100%" />
+    </div>
+}
+<div>@message</div>
+@code {
+    [Parameter]
+    public string Id { get; set; }
+    IResultDocument doc { get; set; }
+    string message { get; set; }
+    string title { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Guid uid;
+        if (Guid.TryParse(Id, out uid))
+        {
+            try
+            {
+                doc = await ResultRepositoryService.GetResult(Guid.Parse(Id));
+                title = "判定　" + (doc.IsAdultContent() ? "性的！" : doc.IsRacyContent() ? "えっち！" : "健全！");
+            }
+            catch (Exception ex)
+            {
+                // XXX 500放れるといい
+                message = ex.Message + " ... " + ex.StackTrace;
+            }
+        }
+        else
+        {
+            // XXX 404放れるといい
+            message = "id is invalid..." + Id;
+        }
+    }
+
+    string getDetectorNickName(ImageDetector detector)
+    {
+        switch (detector)
+        {
+            case ImageDetector.AzureCognitiveServicesComputerVision:
+                return "Mさん";
+            default:
+                return "Uさん";
+        }
+    }
+}
