@@ -46,6 +46,10 @@ namespace BlazorMultiComputerVisionServer
                             Configuration.GetConnectionString("BlobStorage"),
                             Configuration.GetValue<string>("Blob:ContainerName")
                             ));
+            services.AddSingleton(new AzureImageDetectService(
+                            Configuration.GetValue<string>("AzureCognitiveConfig:ComputerVisionSubscriptionKey"),
+                            Configuration.GetValue<string>("AzureCognitiveConfig:ComputerVisionEndpoint")
+                            ));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

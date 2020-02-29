@@ -2,28 +2,52 @@
 
 @using BlazorMultiComputerVisionServer.Service
 @inject IUploadService UploadService
+@inject AzureImageDetectService AzureImageDetectService
 
 <h1>Upload</h1>
 <InputFile OnChange="HandleFileSelected" />
-<p>
-    @UploadedUri
-    <img src="@UploadedUri" />
-</p>
+<div>
+    <dl>
+        <dt>URL</dt>
+        <dd>@UploadedUri</dd>
+        <dt>AzureAdultScore</dt>
+        <dd>@AzureAdultScore</dd>
+        <dt>AzureRacyScore</dt>
+        <dd>@AzureRacyScore</dd>
+        <dt>Image</dt>
+        <dd><img src="@UploadedUri" style="max-width: 100%" /></dd>
+    </dl>
+    <p>@Message</p>
+</div>
 
 @code {
     System.IO.FileStream SelectedFileStream { set; get; }
     double PercentageProgress { set; get; }
     string UploadedUri { set; get; }
+    double AzureAdultScore { set; get; }
+    double AzureRacyScore { set; get; }
+    string Message { get; set; }
 
     async Task HandleFileSelected(IFileListEntry[] files)
     {
-        // TODO 画像サイズはノーマライズしたい
-        // TODO 画像以外はアップロード駄目だろう
-        // TODO ディレクトリ指定できた方が管理上良さそう
-        foreach (var file in files)
+        try
         {
-            var blob = await UploadService.UploadFile(file.Data, file.Name, true);
-            UploadedUri = blob.Uri.ToString();
+            // TODO 画像サイズはノーマライズしたい
+            // TODO 画像以外はアップロード駄目だろう
+            // TODO ディレクトリ指定できた方が管理上良さそう
+            foreach (var file in files)
+            {
+                var blob = await UploadService.UploadFile(file.Data, file.Name, true);
+                UploadedUri = blob.Uri.ToString();
+                var azureResult = await AzureImageDetectService.Detect(UploadedUri);
+                AzureAdultScore = azureResult.AdultScore;
+                AzureRacyScore = azureResult.RacyScore;
+            }
+            Message = "Complete";
+        }
+        catch (Exception ex)
+        {
+            Message = ex.Message + " ... " + ex.StackTrace;
         }
     }
 }
