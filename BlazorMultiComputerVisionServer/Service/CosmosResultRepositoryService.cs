@@ -37,6 +37,7 @@ namespace BlazorMultiComputerVisionServer.Service
                 OwnerId = ownerId,
                 Image = image,
                 Results = new List<IImageDetectResult>(results),
+                CreatedAt = DateTimeOffset.UtcNow,
             };
         }
 
