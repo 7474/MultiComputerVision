@@ -17,6 +17,9 @@
 
     async Task HandleFileSelected(IFileListEntry[] files)
     {
+        // TODO 画像サイズはノーマライズしたい
+        // TODO 画像以外はアップロード駄目だろう
+        // TODO ディレクトリ指定できた方が管理上良さそう
         foreach (var file in files)
         {
             var blob = await UploadService.UploadFile(file.Data, file.Name, true);

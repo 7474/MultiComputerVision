@@ -29,7 +29,6 @@ namespace BlazorMultiComputerVisionServer.Service
             {
                 contentTypeProvider.TryGetContentType(fileName, out contentType);
             }
-            // XXX ディレクトリ指定できた方が管理上は良さそう。
             return Upload(content, id.ToString(), contentType ?? "application/octet-stream");
         }
 
