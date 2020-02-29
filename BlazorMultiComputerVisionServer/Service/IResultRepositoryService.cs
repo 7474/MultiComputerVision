@@ -11,6 +11,8 @@ namespace BlazorMultiComputerVisionServer.Service
         IResultDocument BuildResult(string ownerId, ICloudFile image, IEnumerable<IImageDetectResult> results);
         Task Put(IResultDocument doc);
         Task<IResultDocument> GetResult(Guid id);
+        // XXX 時刻だと妥当なオフセットにならない。Idをソート可能にするなどすると良いかも知れない。
+        Task<IList<IResultDocument>> GetResults(DateTimeOffset offset);
     }
 
     public interface IResultDocument

@@ -55,6 +55,12 @@ namespace BlazorMultiComputerVisionServer.Service
             var res = await resultContainer.GetItemLinqQueryable<ResultDocument>().Where(x => x.Id == id).ToFeedIterator().ReadNextAsync();
             return res.FirstOrDefault();
         }
+
+        public async Task<IList<IResultDocument>> GetResults(DateTimeOffset offset)
+        {
+            var res = await resultContainer.GetItemLinqQueryable<ResultDocument>().Where(x => x.CreatedAt > offset).ToFeedIterator().ReadNextAsync();
+            return res.Select(x => x as IResultDocument).ToList();
+        }
     }
 
     public class ResultDocument : IResultDocument
