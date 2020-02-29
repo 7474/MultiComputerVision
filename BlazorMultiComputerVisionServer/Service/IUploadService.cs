@@ -8,12 +8,14 @@ namespace BlazorMultiComputerVisionServer.Service
 {
     public interface IUploadService
     {
-        Task<ICloudFile> Upload(Stream content, string name, string contentType);
+        Task<ICloudFile> UploadFile(Stream content, string fileName, bool detectContentType);
+        Task<ICloudFile> Upload(Stream content, string blobName, string contentType);
+        ICloudFile GetInfo(string blobName);
     }
 
     public interface ICloudFile
     {
-        string Key { get; }
+        string BlobName { get; }
         Uri Uri { get; }
     }
 }

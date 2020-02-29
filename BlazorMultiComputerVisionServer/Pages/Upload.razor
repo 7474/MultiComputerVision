@@ -19,7 +19,7 @@
     {
         foreach (var file in files)
         {
-            var blob = await UploadService.Upload(file.Data, file.Name, "");
+            var blob = await UploadService.UploadFile(file.Data, file.Name, true);
             UploadedUri = blob.Uri.ToString();
         }
     }
