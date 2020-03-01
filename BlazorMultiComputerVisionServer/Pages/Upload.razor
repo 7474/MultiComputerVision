@@ -4,6 +4,7 @@
 @inject IUploadService UploadService
 @inject AzureImageDetectService AzureImageDetectService
 @inject AwsImageDetectService AwsImageDetectService
+@inject GcpImageDetectService GcpImageDetectService
 @inject IResultRepositoryService ResultRepositoryService
 @inject NavigationManager NavigationManager
 
@@ -36,8 +37,9 @@
             var blob = await UploadService.UploadFile(file.Data, file.Name, true);
             var azureResult = await AzureImageDetectService.Detect(blob.Uri.ToString());
             var awsResult = await AwsImageDetectService.Detect(blob.Uri.ToString());
+            var gcpResult = await GcpImageDetectService.Detect(blob.Uri.ToString());
 
-            var doc = ResultRepositoryService.BuildResult("koudenpa", blob, new IImageDetectResult[] { azureResult, awsResult });
+            var doc = ResultRepositoryService.BuildResult("koudenpa", blob, new IImageDetectResult[] { azureResult, awsResult, gcpResult });
             await ResultRepositoryService.Put(doc);
 
             Message = "Complete!";

@@ -34,6 +34,9 @@ else
                 }
             </tbody>
         </table>
+        <div class="alert alert-info" role="alert">
+            Gさんは常に0点なようです。
+        </div>
         <img src="@doc.Image.Uri" style="max-width: 100%" />
     </div>
 }
@@ -76,6 +79,8 @@ else
                 return "Mさん";
             case ImageDetector.AwsAmazonRekognition:
                 return "Aさん";
+            case ImageDetector.GcpCloudVision:
+                return "Gさん";
             default:
                 return "Uさん";
         }

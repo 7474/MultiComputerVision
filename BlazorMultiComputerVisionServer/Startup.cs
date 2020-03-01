@@ -55,6 +55,11 @@ namespace BlazorMultiComputerVisionServer
                             Configuration.GetValue<string>("AWS:AccessKeyID"),
                             Configuration.GetValue<string>("AWS:SecretAccessKey")
                 )));
+            services.AddSingleton(new GcpImageDetectService(
+                Configuration.GetValue<string>("GCP:JsonCredentials")
+                ));
+
+            //JsonCredentials
             var cosmos = new CosmosResultRepositoryService(Configuration.GetConnectionString("AzureCosmos"));
             cosmos.Initialize("MultiComputerVision");
             services.AddSingleton<IResultRepositoryService>(cosmos);
