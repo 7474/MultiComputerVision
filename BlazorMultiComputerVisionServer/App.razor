@@ -1,6 +1,14 @@
 ﻿<Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
-        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+            <NotAuthorized>
+                <p><NavLink href="/Identity/Account/Login">ログイン</NavLink>が必要です</p>
+            </NotAuthorized>
+            <Authorizing>
+                <h1>Authentication in progress</h1>
+                <p>Only visible while authentication is in progress.</p>
+            </Authorizing>
+        </AuthorizeRouteView>
     </Found>
     <NotFound>
         <CascadingAuthenticationState>

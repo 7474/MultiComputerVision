@@ -1,4 +1,5 @@
 ﻿@page "/upload"
+@attribute [Authorize]
 
 @using BlazorMultiComputerVisionServer.Service
 @inject IUploadService UploadService
@@ -18,6 +19,9 @@
 </div>
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
     System.IO.FileStream SelectedFileStream { set; get; }
     double PercentageProgress { set; get; }
     string Message { get; set; }
@@ -29,9 +33,9 @@
             // TODO 画像サイズはノーマライズしたい
             // TODO 画像以外はアップロード駄目だろう
             // TODO ディレクトリ指定できた方が管理上良さそう
-            // TODO オーナー名、認証されたユーザーに
-            // TODO そもそも認証されたユーザーだけ使えるように
             Message = "Processing...";
+            var authState = await authenticationStateTask;
+            var user = authState.User;
             var file = files.First();
 
             var blob = await UploadService.UploadFile(file.Data, file.Name, true);
@@ -39,7 +43,7 @@
             var awsResult = await AwsImageDetectService.Detect(blob.Uri.ToString());
             var gcpResult = await GcpImageDetectService.Detect(blob.Uri.ToString());
 
-            var doc = ResultRepositoryService.BuildResult("koudenpa", blob, new IImageDetectResult[] { azureResult, awsResult, gcpResult });
+            var doc = ResultRepositoryService.BuildResult(user.Identity.Name, blob, new IImageDetectResult[] { azureResult, awsResult, gcpResult });
             await ResultRepositoryService.Put(doc);
 
             Message = "Complete!";
