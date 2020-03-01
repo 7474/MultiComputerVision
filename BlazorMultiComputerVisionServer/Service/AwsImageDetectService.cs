@@ -1,4 +1,5 @@
-﻿using Amazon.Rekognition;
+﻿using Amazon;
+using Amazon.Rekognition;
 using Amazon.Rekognition.Model;
 using Amazon.Runtime;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
@@ -17,10 +18,9 @@ namespace BlazorMultiComputerVisionServer.Service
         private AmazonRekognitionClient rekognitionClient;
         private HttpClient httpClient;
 
-        public AwsImageDetectService(AWSCredentials credentials)
+        public AwsImageDetectService(AWSCredentials credentials, RegionEndpoint regionEndpoint)
         {
-            // string accessKeyID, string secretAccessKey
-            rekognitionClient = new AmazonRekognitionClient(credentials);
+            rekognitionClient = new AmazonRekognitionClient(credentials, regionEndpoint);
             httpClient = new HttpClient();
         }
 

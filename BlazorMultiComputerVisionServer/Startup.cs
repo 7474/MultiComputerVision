@@ -16,6 +16,7 @@ using BlazorMultiComputerVisionServer.Areas.Identity;
 using BlazorMultiComputerVisionServer.Data;
 using BlazorMultiComputerVisionServer.Service;
 using Amazon.Runtime;
+using Amazon;
 
 namespace BlazorMultiComputerVisionServer
 {
@@ -60,7 +61,7 @@ namespace BlazorMultiComputerVisionServer
             services.AddSingleton(new AwsImageDetectService(new BasicAWSCredentials(
                             Configuration.GetValue<string>("AWS:AccessKeyID"),
                             Configuration.GetValue<string>("AWS:SecretAccessKey")
-                )));
+                ), RegionEndpoint.GetBySystemName(Configuration.GetValue<string>("AWS:Region"))));
             services.AddSingleton(new GcpImageDetectService(
                 Configuration.GetValue<string>("GCP:JsonCredentials")
                 ));
