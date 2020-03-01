@@ -23,11 +23,11 @@ else
                     <tr>
                         <td>@getDetectorNickName(result.Detector)</td>
                         <td>
-                            @(result.IsAdultContent ? "✖" : "✔")
+                            @(result.IsAdultContent ? "❌" : "✔")
                             （@(Math.Round(result.AdultScore * 100))点）
                         </td>
                         <td>
-                            @(result.IsRacyContent ? "✖" : "✔")
+                            @(result.IsRacyContent ? "❌" : "✔")
                             （@(Math.Round(result.RacyScore * 100))点）
                         </td>
                     </tr>
@@ -35,7 +35,7 @@ else
             </tbody>
         </table>
         <div class="alert alert-info" role="alert">
-            Gさんは常に0点なようです。
+            Gさんは点数をつけてくれないようです。
         </div>
         <img src="@doc.Image.Uri" style="max-width: 100%" />
     </div>
