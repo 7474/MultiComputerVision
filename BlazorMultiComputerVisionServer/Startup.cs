@@ -33,11 +33,18 @@ namespace BlazorMultiComputerVisionServer
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            var cosmos = new CosmosResultRepositoryService(Configuration.GetConnectionString("AzureCosmos"));
+            cosmos.Initialize("MultiComputerVision");
+            services.AddSingleton<IResultRepositoryService>(cosmos);
+            var cosmosDbContext = new CosmosDbContext(Configuration.GetConnectionString("AzureCosmos"));
+            cosmosDbContext.Initialize("MultiComputerVision");
+            services.AddSingleton(cosmosDbContext);
+            services.AddSingleton<IUserStore<ApplicationUser>, CosmosUserStore>();
+
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddUserStore<CosmosUserStore>()
+                .AddUserManager<UserManager<ApplicationUser>>();
+
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
@@ -58,11 +65,6 @@ namespace BlazorMultiComputerVisionServer
             services.AddSingleton(new GcpImageDetectService(
                 Configuration.GetValue<string>("GCP:JsonCredentials")
                 ));
-
-            //JsonCredentials
-            var cosmos = new CosmosResultRepositoryService(Configuration.GetConnectionString("AzureCosmos"));
-            cosmos.Initialize("MultiComputerVision");
-            services.AddSingleton<IResultRepositoryService>(cosmos);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
