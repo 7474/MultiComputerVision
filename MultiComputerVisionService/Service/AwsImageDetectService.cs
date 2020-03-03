@@ -2,16 +2,13 @@
 using Amazon.Rekognition;
 using Amazon.Rekognition.Model;
 using Amazon.Runtime;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace BlazorMultiComputerVisionServer.Service
+namespace MultiComputerVisionService.Service
 {
     public sealed class AwsImageDetectService : IImageDetectService, IDisposable
     {

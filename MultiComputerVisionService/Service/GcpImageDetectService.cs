@@ -1,13 +1,8 @@
 ﻿using Google.Cloud.Vision.V1;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
-using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorMultiComputerVisionServer.Service
+namespace MultiComputerVisionService.Service
 {
     public class GcpImageDetectService : IImageDetectService
     {

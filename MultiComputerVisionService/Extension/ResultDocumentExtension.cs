@@ -1,10 +1,7 @@
-﻿using BlazorMultiComputerVisionServer.Service;
-using System;
-using System.Collections.Generic;
+﻿using MultiComputerVisionService.Service;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace BlazorMultiComputerVisionServer.Extension
+namespace MultiComputerVisionService.Extension
 {
     public static class ResultDocumentExtension
     {
