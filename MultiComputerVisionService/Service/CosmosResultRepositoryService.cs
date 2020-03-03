@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorMultiComputerVisionServer.Service
+namespace MultiComputerVisionService.Service
 {
     public sealed class CosmosResultRepositoryService : IResultRepositoryService, IDisposable
     {

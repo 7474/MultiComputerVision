@@ -2,12 +2,10 @@
 using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.StaticFiles;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorMultiComputerVisionServer.Service
+namespace MultiComputerVisionService.Service
 {
     public class BlobUploadService : IUploadService
     {
