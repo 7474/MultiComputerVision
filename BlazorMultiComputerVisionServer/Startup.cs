@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MultiComputerVisionService.Service;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace BlazorMultiComputerVisionServer
 {
@@ -38,6 +39,7 @@ namespace BlazorMultiComputerVisionServer
                 .AddUserStore<CosmosUserStore>()
                 .AddUserManager<UserManager<ApplicationUser>>();
 
+            services.AddHeadElementHelper();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
