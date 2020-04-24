@@ -76,6 +76,8 @@ namespace BlazorMultiComputerVisionServer
                 app.UseHsts();
             }
 
+            app.UseHeadElementServerPrerendering();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
