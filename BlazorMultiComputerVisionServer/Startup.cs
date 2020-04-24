@@ -30,7 +30,7 @@ namespace BlazorMultiComputerVisionServer
             cosmos.Initialize(Configuration.GetValue<string>("Cosmos:DatabaseId"));
             services.AddSingleton<IResultRepositoryService>(cosmos);
             var cosmosDbContext = new CosmosDbContext(Configuration.GetConnectionString("AzureCosmos"));
-            cosmosDbContext.Initialize("MultiComputerVision");
+            cosmosDbContext.Initialize(Configuration.GetValue<string>("Cosmos:DatabaseId"));
             services.AddSingleton(cosmosDbContext);
             services.AddSingleton<IUserStore<ApplicationUser>, CosmosUserStore>();
 
