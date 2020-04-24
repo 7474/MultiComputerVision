@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,11 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="AWSSDK.Rekognition" Version="3.5.0-beta" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.3.0" />
-    <PackageReference Include="Google.Cloud.Vision.V1" Version="2.0.0-beta01" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.4.1" />
+    <PackageReference Include="Google.Cloud.Vision.V1" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Vision.ComputerVision" Version="6.0.0-dev.20190919.3" />
-    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.7.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.8.0" />
   </ItemGroup>
 
 </Project>
