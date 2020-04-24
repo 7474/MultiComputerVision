@@ -55,7 +55,7 @@ else
         get
         {
             return string.Join(", ", doc.Results.Select(
-                x => $"{getDetectorNickName(x.Detector)}: {(x.IsAdultContent ? "❌" : "✔")}: {(x.IsRacyContent ? "❌" : "✔")}")
+                x => $"{getDetectorNickName(x.Detector)}: {(x.IsAdultContent ? "❌" : "✔")} {(x.IsRacyContent ? "❌" : "✔")}")
             );
         }
     }
