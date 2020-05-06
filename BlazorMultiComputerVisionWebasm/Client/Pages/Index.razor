@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject AllowGuestHttpClient Http
 
 <div class="jumbotron">
@@ -13,23 +12,23 @@
 <h2>最近の判断結果</h2>
 @if (docs == null)
 {
-    <p><em>Loading...</em></p>
+<p><em>Loading...</em></p>
 }
 else
 {
-    <div class="d-flex flex-wrap">
-        @foreach (var doc in docs)
+<div class="d-flex flex-wrap">
+    @foreach (var doc in docs)
         {
-            <NavLink href="@($"/results/{doc.Id}")" style="margin: 4px;">
-                <img src="@doc.Image.Uri" class="img-thumbnail" style="min-width: 120px; max-width: 120px;">
-            </NavLink>
+    <NavLink href="@($"/results/{doc.Id}")" style="margin: 4px;">
+        <img src="@doc.Image.Uri" class="img-thumbnail" style="min-width: 120px; max-width: 120px;">
+    </NavLink>
         }
-    </div>
+</div>
     if (next < DateTimeOffset.MaxValue)
     {
-        <p>
-            <NavLink href="@($"/results?offset={next.UtcTicks}")" class="btn btn-link">More</NavLink>
-        </p>
+<p>
+    <NavLink href="@($"/results?offset={next.UtcTicks}")" class="btn btn-link">More</NavLink>
+</p>
     }
 }
 <div>@message</div>
@@ -42,22 +41,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        try
+        docs = await Http.GetFromJsonAsync<PlainResultDocument[]>("ResultDocument");
+        if (docs.Length > 0)
         {
-            docs = await Http.GetFromJsonAsync<PlainResultDocument[]>("ResultDocument");
-            if (docs.Length > 0)
-            {
-                next = docs.Max(x => x.CreatedAt);
-            }
-            else
-            {
-                next = DateTimeOffset.MaxValue;
-            }
+            next = docs.Max(x => x.CreatedAt);
         }
-        catch (AccessTokenNotAvailableException exception)
+        else
         {
-            exception.Redirect();
+            next = DateTimeOffset.MaxValue;
         }
     }
-
 }

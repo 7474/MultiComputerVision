@@ -28,5 +28,13 @@ namespace BlazorMultiComputerVisionWebasm.Server.Controllers
         {
             return await resultRepositoryService.GetResults(DateTimeOffset.FromUnixTimeMilliseconds(offset));
         }
+
+        [HttpGet("{id}")]
+        public async Task<IResultDocument> GetByIdAsync(Guid id)
+        {
+            var doc = await resultRepositoryService.GetResult(id);
+            return doc;
+            // XXX 404とか処理する
+        }
     }
 }
