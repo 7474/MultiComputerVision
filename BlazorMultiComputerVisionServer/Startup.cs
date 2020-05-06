@@ -1,7 +1,6 @@
 using Amazon;
 using Amazon.Runtime;
 using BlazorMultiComputerVisionServer.Areas.Identity;
-using BlazorMultiComputerVisionServer.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MultiComputerVisionService.Data;
 using MultiComputerVisionService.Service;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 

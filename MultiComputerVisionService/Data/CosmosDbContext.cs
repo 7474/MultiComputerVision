@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BlazorMultiComputerVisionServer.Data
+namespace MultiComputerVisionService.Data
 {
     public class CosmosDbContext : IDisposable
     {
