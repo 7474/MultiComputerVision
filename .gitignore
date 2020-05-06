@@ -341,3 +341,4 @@ healthchecksdb
 
 # Configuration file containing Secrets.
 BlazorMultiComputerVisionServer/appsettings.Development.json
+/BlazorMultiComputerVisionWebasm/Server/appsettings.Development.json
