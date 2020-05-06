@@ -13,6 +13,9 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using BlazorMultiComputerVisionWebasm.Server.Data;
 using BlazorMultiComputerVisionWebasm.Server.Models;
+using MultiComputerVisionService.Service;
+using Amazon;
+using Amazon.Runtime;
 
 namespace BlazorMultiComputerVisionWebasm.Server
 {
@@ -29,6 +32,26 @@ namespace BlazorMultiComputerVisionWebasm.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var cosmos = new CosmosResultRepositoryService(Configuration.GetConnectionString("AzureCosmos"));
+            cosmos.Initialize(Configuration.GetValue<string>("Cosmos:DatabaseId"));
+            services.AddSingleton<IResultRepositoryService>(cosmos);
+
+            services.AddSingleton<IUploadService>(new BlobUploadService(
+                            Configuration.GetConnectionString("BlobStorage"),
+                            Configuration.GetValue<string>("Blob:ContainerName")
+                            ));
+            services.AddSingleton(new AzureImageDetectService(
+                            Configuration.GetValue<string>("AzureCognitiveConfig:ComputerVisionSubscriptionKey"),
+                            Configuration.GetValue<string>("AzureCognitiveConfig:ComputerVisionEndpoint")
+                            ));
+            services.AddSingleton(new AwsImageDetectService(new BasicAWSCredentials(
+                            Configuration.GetValue<string>("AWS:AccessKeyID"),
+                            Configuration.GetValue<string>("AWS:SecretAccessKey")
+                ), RegionEndpoint.GetBySystemName(Configuration.GetValue<string>("AWS:Region"))));
+            services.AddSingleton(new GcpImageDetectService(
+                Configuration.GetValue<string>("GCP:JsonCredentials")
+                ));
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));

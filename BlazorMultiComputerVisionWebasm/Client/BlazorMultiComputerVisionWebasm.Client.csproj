@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\BlazorMultiComputerVisionWebasm.Shared.csproj" />
+    <ProjectReference Include="..\..\MultiComputerVisionService\MultiComputerVisionService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

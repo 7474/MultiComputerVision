@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MultiComputerVisionService\MultiComputerVisionService.csproj" />
     <ProjectReference Include="..\Client\BlazorMultiComputerVisionWebasm.Client.csproj" />
-    <ProjectReference Include="..\Shared\BlazorMultiComputerVisionWebasm.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
