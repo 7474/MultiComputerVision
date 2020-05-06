@@ -43,7 +43,6 @@ namespace BlazorMultiComputerVisionServer
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-            services.AddSingleton<WeatherForecastService>();
 
             services.AddSingleton<IUploadService>(new BlobUploadService(
                             Configuration.GetConnectionString("BlobStorage"),
