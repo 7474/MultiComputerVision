@@ -80,6 +80,21 @@ namespace MultiComputerVisionService.Service
         public DateTimeOffset CreatedAt { get; set; }
     }
 
+    // XXX For runtime that not support ConcreteTypeConverter.
+    public class PlainResultDocument : IResultDocument
+    {
+        [JsonProperty(PropertyName = "id")]
+        public Guid Id { get; set; }
+        public string OwnerId { get; set; }
+        public CloudFile Image { get; set; }
+        public ICollection<ImageDetectResult> Results { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+
+        ICloudFile IResultDocument.Image => Image;
+
+        ICollection<IImageDetectResult> IResultDocument.Results => Results.Select(x => x as IImageDetectResult).ToList();
+    }
+
     public class CloudFile : ICloudFile
     {
         public string BlobName { get; set; }

@@ -1,0 +1,66 @@
+﻿@page "/upload"
+@using System.Text.Json;
+@attribute [Authorize]
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>コンピュータの目に判断を仰ぐ</h1>
+<div class="alert alert-info" role="alert">
+    画像を選択すると判断してくれます。
+</div>
+<InputFile OnChange="HandleSelection" />
+<div>
+    <p>@Message</p>
+</div>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState>
+    authenticationStateTask
+    { get; set; }
+
+    System.IO.FileStream SelectedFileStream { set; get; }
+    double PercentageProgress { set; get; }
+    string Message { get; set; }
+
+    async Task HandleSelection(IFileListEntry[] files)
+    {
+        try
+        {
+            var rawFile = files.FirstOrDefault();
+            if (rawFile != null)
+            {
+                // XXX クライアントサイドで画像処理するかどうかとか
+                var format = "image/jpeg";
+                var imageFile = await rawFile.ToImageFileAsync(format, 1920, 1920);
+                var ms = new System.IO.MemoryStream();
+                await imageFile.Data.CopyToAsync(ms);
+
+                var imageDataUri = $"data:{format};base64,{Convert.ToBase64String(ms.ToArray())}";
+
+                Message = $"Finished loading {ms.Length} bytes from {imageFile.Name}";
+
+                // XXX 薄いラッパー作った方がいいかな。例示もされている。
+                // https://docs.microsoft.com/ja-jp/aspnet/core/security/blazor/webassembly/additional-scenarios?view=aspnetcore-3.1#attach-tokens-to-outgoing-requests
+                // XXX リクエストの型は共有プロジェクトにあった方がいい
+                var res = await Http.PostAsJsonAsync("Upload", new
+                {
+                    Name = rawFile.Name,
+                    ImageDataUri = imageDataUri,
+                });
+                var doc = await res.Content.ReadFromJsonAsync<PlainResultDocument>(
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true, });
+
+                Message = "Complete!";
+
+                NavigationManager.NavigateTo($"/results/{doc.Id.ToString()}");
+            }
+
+        }
+        catch (Exception ex)
+        {
+            Message = ex.Message + " ... " + ex.StackTrace;
+        }
+    }
+}

@@ -1,18 +1,23 @@
-using Amazon;
-using Amazon.Runtime;
-using BlazorMultiComputerVisionServer.Areas.Identity;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MultiComputerVisionService.Data;
+using System.Linq;
+using BlazorMultiComputerVisionWebasm.Server.Data;
+using BlazorMultiComputerVisionWebasm.Server.Models;
 using MultiComputerVisionService.Service;
-using Toolbelt.Blazor.Extensions.DependencyInjection;
+using Amazon;
+using Amazon.Runtime;
 
-namespace BlazorMultiComputerVisionServer
+namespace BlazorMultiComputerVisionWebasm.Server
 {
     public class Startup
     {
@@ -30,19 +35,6 @@ namespace BlazorMultiComputerVisionServer
             var cosmos = new CosmosResultRepositoryService(Configuration.GetConnectionString("AzureCosmos"));
             cosmos.Initialize(Configuration.GetValue<string>("Cosmos:DatabaseId"));
             services.AddSingleton<IResultRepositoryService>(cosmos);
-            var cosmosDbContext = new CosmosDbContext(Configuration.GetConnectionString("AzureCosmos"));
-            cosmosDbContext.Initialize(Configuration.GetValue<string>("Cosmos:DatabaseId"));
-            services.AddSingleton(cosmosDbContext);
-            services.AddSingleton<IUserStore<ApplicationUser>, CosmosUserStore>();
-
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddUserStore<CosmosUserStore>()
-                .AddUserManager<UserManager<ApplicationUser>>();
-
-            services.AddHeadElementHelper();
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
             services.AddSingleton<IUploadService>(new BlobUploadService(
                             Configuration.GetConnectionString("BlobStorage"),
@@ -59,6 +51,22 @@ namespace BlazorMultiComputerVisionServer
             services.AddSingleton(new GcpImageDetectService(
                 Configuration.GetValue<string>("GCP:JsonCredentials")
                 ));
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddIdentityServer()
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+
+            services.AddAuthentication()
+                .AddIdentityServerJwt();
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +75,8 @@ namespace BlazorMultiComputerVisionServer
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
+                app.UseWebAssemblyDebugging();
             }
             else
             {
@@ -75,21 +85,21 @@ namespace BlazorMultiComputerVisionServer
                 app.UseHsts();
             }
 
-            app.UseHeadElementServerPrerendering();
-
             app.UseHttpsRedirection();
+            app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/_Host");
+                endpoints.MapFallbackToFile("index.html");
             });
         }
     }

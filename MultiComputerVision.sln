@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMultiComputerVisionServer", "BlazorMultiComputerVisionServer\BlazorMultiComputerVisionServer.csproj", "{262F030A-9E6C-4F68-B429-BC9F33EECB06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiComputerVisionService", "MultiComputerVisionService\MultiComputerVisionService.csproj", "{E360BB60-33A8-46C0-A5EA-44D8BDAB78D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiComputerVisionService", "MultiComputerVisionService\MultiComputerVisionService.csproj", "{E360BB60-33A8-46C0-A5EA-44D8BDAB78D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMultiComputerVisionWebasm.Server", "BlazorMultiComputerVisionWebasm\Server\BlazorMultiComputerVisionWebasm.Server.csproj", "{B6BF3D2C-FA3B-4BB5-99E7-D50451EFFD44}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMultiComputerVisionWebasm.Client", "BlazorMultiComputerVisionWebasm\Client\BlazorMultiComputerVisionWebasm.Client.csproj", "{4439E35F-7E19-4B71-B072-1C54ACE5362A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{E360BB60-33A8-46C0-A5EA-44D8BDAB78D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E360BB60-33A8-46C0-A5EA-44D8BDAB78D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E360BB60-33A8-46C0-A5EA-44D8BDAB78D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6BF3D2C-FA3B-4BB5-99E7-D50451EFFD44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6BF3D2C-FA3B-4BB5-99E7-D50451EFFD44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6BF3D2C-FA3B-4BB5-99E7-D50451EFFD44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6BF3D2C-FA3B-4BB5-99E7-D50451EFFD44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4439E35F-7E19-4B71-B072-1C54ACE5362A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4439E35F-7E19-4B71-B072-1C54ACE5362A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4439E35F-7E19-4B71-B072-1C54ACE5362A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4439E35F-7E19-4B71-B072-1C54ACE5362A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
