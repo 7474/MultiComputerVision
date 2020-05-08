@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace BlazorMultiComputerVisionWebasm.Server.Data.Migrations
+namespace MultiComputerVisionIdentityService.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

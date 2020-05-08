@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MultiComputerVisionIdentityService\MultiComputerVisionIdentityService.csproj" />
     <ProjectReference Include="..\..\MultiComputerVisionService\MultiComputerVisionService.csproj" />
     <ProjectReference Include="..\Client\BlazorMultiComputerVisionWebasm.Client.csproj" />
   </ItemGroup>
