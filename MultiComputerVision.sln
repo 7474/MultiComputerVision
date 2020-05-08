@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMultiComputerVisionWe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMultiComputerVisionWebasm.Client", "BlazorMultiComputerVisionWebasm\Client\BlazorMultiComputerVisionWebasm.Client.csproj", "{4439E35F-7E19-4B71-B072-1C54ACE5362A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiComputerVisionIdentityService", "MultiComputerVisionIdentityService\MultiComputerVisionIdentityService.csproj", "{8DD985CB-4EE6-453B-A7C8-7647CF5FF038}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiComputerVisionIdentityService", "MultiComputerVisionIdentityService\MultiComputerVisionIdentityService.csproj", "{8DD985CB-4EE6-453B-A7C8-7647CF5FF038}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
