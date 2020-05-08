@@ -1,4 +1,4 @@
-﻿using BlazorMultiComputerVisionWebasm.Server.Models;
+﻿using MultiComputerVisionIdentityService.Models;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlazorMultiComputerVisionWebasm.Server.Data
+namespace MultiComputerVisionIdentityService.Data
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {

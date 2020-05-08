@@ -1,8 +1,8 @@
 using Amazon;
 using Amazon.Runtime;
 using BlazorMultiComputerVisionServer.Areas.Identity;
-using BlazorMultiComputerVisionWebasm.Server.Data;
-using BlazorMultiComputerVisionWebasm.Server.Models;
+using MultiComputerVisionIdentityService.Data;
+using MultiComputerVisionIdentityService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
