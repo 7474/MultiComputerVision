@@ -1,14 +1,16 @@
 using Amazon;
 using Amazon.Runtime;
 using BlazorMultiComputerVisionServer.Areas.Identity;
+using BlazorMultiComputerVisionWebasm.Server.Data;
+using BlazorMultiComputerVisionWebasm.Server.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MultiComputerVisionService.Data;
 using MultiComputerVisionService.Service;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 
@@ -30,14 +32,13 @@ namespace BlazorMultiComputerVisionServer
             var cosmos = new CosmosResultRepositoryService(Configuration.GetConnectionString("AzureCosmos"));
             cosmos.Initialize(Configuration.GetValue<string>("Cosmos:DatabaseId"));
             services.AddSingleton<IResultRepositoryService>(cosmos);
-            var cosmosDbContext = new CosmosDbContext(Configuration.GetConnectionString("AzureCosmos"));
-            cosmosDbContext.Initialize(Configuration.GetValue<string>("Cosmos:DatabaseId"));
-            services.AddSingleton(cosmosDbContext);
-            services.AddSingleton<IUserStore<ApplicationUser>, CosmosUserStore>();
 
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddUserStore<CosmosUserStore>()
-                .AddUserManager<UserManager<ApplicationUser>>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddUserManager<UserManager<ApplicationUser>>(); ;
 
             services.AddHeadElementHelper();
             services.AddRazorPages();
