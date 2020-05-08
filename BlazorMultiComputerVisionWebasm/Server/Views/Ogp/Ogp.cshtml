@@ -1,0 +1,13 @@
+﻿@model BlazorMultiComputerVisionWebasm.Server.ViewModels.Ogp
+@{
+    Layout = "_Host";
+    ViewData["Title"] = Model.Title;
+}
+@section metas {
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="@Model.Image" />
+    <meta property="og:title" content="@(Model.Title + "- MultiComputerVision - BlazorWebasm")" />
+    <meta property="og:description" contentContent="@Model.Description" />
+}
+
+Loading...

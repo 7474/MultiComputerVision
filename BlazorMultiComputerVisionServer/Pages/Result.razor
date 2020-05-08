@@ -24,7 +24,7 @@ else
                 @foreach (var result in doc.Results)
                 {
                     <tr>
-                        <td>@getDetectorNickName(result.Detector)</td>
+                        <td>@(result.Detector.GetNickName())</td>
                         <td>
                             @(result.IsAdultContent ? "❌" : "✔")
                             （@(Math.Round(result.AdultScore * 100))点）
@@ -50,15 +50,7 @@ else
     IResultDocument doc { get; set; }
     string message { get; set; }
     string title { get; set; }
-    string description
-    {
-        get
-        {
-            return string.Join(", ", doc.Results.Select(
-                x => $"{getDetectorNickName(x.Detector)}: {(x.IsAdultContent ? "❌" : "✔")} {(x.IsRacyContent ? "❌" : "✔")}")
-            );
-        }
-    }
+    string description { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,7 +60,8 @@ else
             try
             {
                 doc = await ResultRepositoryService.GetResult(Guid.Parse(Id));
-                title = "判定　" + (doc.IsAdultContent() ? "性的！" : doc.IsRacyContent() ? "えっち！" : "健全！");
+                title = doc.GetTitle();
+                description = doc.GetDescription();
             }
             catch (Exception ex)
             {
@@ -80,21 +73,6 @@ else
         {
             // XXX 404放れるといい
             message = "id is invalid..." + Id;
-        }
-    }
-
-    string getDetectorNickName(ImageDetector detector)
-    {
-        switch (detector)
-        {
-            case ImageDetector.AzureCognitiveServicesComputerVision:
-                return "Mさん";
-            case ImageDetector.AwsAmazonRekognition:
-                return "Aさん";
-            case ImageDetector.GcpCloudVision:
-                return "Gさん";
-            default:
-                return "Uさん";
         }
     }
 }
