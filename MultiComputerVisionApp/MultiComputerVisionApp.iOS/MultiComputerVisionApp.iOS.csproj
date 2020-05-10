@@ -5,13 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{72990654-00D0-45C4-9778-D0D29AB01BB4}</ProjectGuid>
+    <ProjectGuid>{1A08C8A9-5212-4224-92C6-7DD098CAAAFE}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{6143fdea-f3c2-4a09-aafa-6e230626515e}</TemplateGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MobileBlazorBindingsMultiComputerVisionApp.iOS</RootNamespace>
+    <RootNamespace>MultiComputerVisionApp.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>MobileBlazorBindingsMultiComputerVisionApp.iOS</AssemblyName>
+    <AssemblyName>MultiComputerVisionApp.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
   </PropertyGroup>
@@ -127,9 +127,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\MobileBlazorBindingsMultiComputerVisionApp\MobileBlazorBindingsMultiComputerVisionApp.csproj">
-      <Project>{4717263F-C89E-44EA-A5F4-9DFD06031638}</Project>
-      <Name>MobileBlazorBindingsMultiComputerVisionApp</Name>
+    <ProjectReference Include="..\MultiComputerVisionApp\MultiComputerVisionApp.csproj">
+      <Project>{4D878F77-D1F9-4CE8-89BE-D41FD60B9F4D}</Project>
+      <Name>MultiComputerVisionApp</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

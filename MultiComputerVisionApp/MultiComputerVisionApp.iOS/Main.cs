@@ -4,7 +4,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace MobileBlazorBindingsMultiComputerVisionApp.iOS
+namespace MultiComputerVisionApp.iOS
 {
     public class Application
     {

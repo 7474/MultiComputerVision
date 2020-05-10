@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace MobileBlazorBindingsMultiComputerVisionApp
+namespace MultiComputerVisionApp
 {
     public class App : Application
     {

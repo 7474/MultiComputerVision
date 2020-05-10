@@ -3,12 +3,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{067F83DA-D747-491E-B279-12F2EA6646FB}</ProjectGuid>
+    <ProjectGuid>{95AE14A6-FAF8-4B9A-98A6-0B2AAB0E9B1F}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{c9e5eea5-ca05-42a1-839b-61506e0a37df}</TemplateGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MobileBlazorBindingsMultiComputerVisionApp.Droid</RootNamespace>
-    <AssemblyName>MobileBlazorBindingsMultiComputerVisionApp.Android</AssemblyName>
+    <RootNamespace>MultiComputerVisionApp.Droid</RootNamespace>
+    <AssemblyName>MultiComputerVisionApp.Android</AssemblyName>
     <Deterministic>True</Deterministic>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
@@ -89,9 +89,9 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MobileBlazorBindingsMultiComputerVisionApp\MobileBlazorBindingsMultiComputerVisionApp.csproj">
-      <Project>{4717263F-C89E-44EA-A5F4-9DFD06031638}</Project>
-      <Name>MobileBlazorBindingsMultiComputerVisionApp</Name>
+    <ProjectReference Include="..\MultiComputerVisionApp\MultiComputerVisionApp.csproj">
+      <Project>{4D878F77-D1F9-4CE8-89BE-D41FD60B9F4D}</Project>
+      <Name>MultiComputerVisionApp</Name>
     </ProjectReference>
   </ItemGroup>
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
