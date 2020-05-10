@@ -13,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MultiComputerVisionService.Service;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
-using BlazorMultiComputerVisionServer.Service;
 using MultiComputerVisionService.Service.Application;
 
 namespace BlazorMultiComputerVisionServer
@@ -63,8 +62,8 @@ namespace BlazorMultiComputerVisionServer
                 Configuration.GetValue<string>("GCP:JsonCredentials")
                 ));
 
-            services.AddSingleton<IResultDocumentService, ResultDocumentService>();
-            services.AddSingleton<IUploadImageService, UploadImageService>();
+            services.AddSingleton<IResultDocumentService, ServerSideResultDocumentService>();
+            services.AddSingleton<IUploadImageService, ServerSideUploadImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,9 +80,9 @@ namespace BlazorMultiComputerVisionServer
                 app.UseHsts();
             }
 
-            app.UseHeadElementServerPrerendering();
-
             app.UseHttpsRedirection();
+
+            app.UseHeadElementServerPrerendering();
             app.UseStaticFiles();
 
             app.UseRouting();

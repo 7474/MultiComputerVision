@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MultiComputerVisionRazorComponents\MultiComputerVisionRazorComponents.csproj" />
     <ProjectReference Include="..\..\MultiComputerVisionService\MultiComputerVisionService.csproj" />
   </ItemGroup>
 

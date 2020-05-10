@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using MultiComputerVisionService.Service.Application;
+using BlazorMultiComputerVisionWebasm.Client.Service;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace BlazorMultiComputerVisionWebasm.Client
 {
@@ -27,9 +30,22 @@ namespace BlazorMultiComputerVisionWebasm.Client
             // Supply HttpClient instances that include access tokens when making requests to the server project
             builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("BlazorMultiComputerVisionWebasm.ServerAPI"));
 
+            builder.Services.AddSingleton<IResultDocumentService, ResultDocumentService>();
+            builder.Services.AddSingleton<IUploadImageService, UploadImageService>();
+
             builder.Services.AddApiAuthorization();
 
+            builder.Services.AddHeadElementHelper();
+
+            ConfigureCommonServices(builder.Services);
+
             await builder.Build().RunAsync();
+        }
+
+        public static void ConfigureCommonServices(IServiceCollection services)
+        {
+            // Ref. https://docs.microsoft.com/ja-jp/aspnet/core/security/blazor/webassembly/additional-scenarios?view=aspnetcore-3.1#support-prerendering-with-authentication
+            // Common service registrations
         }
     }
 }

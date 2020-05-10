@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BlazorMultiComputerVisionServer.Service
+namespace MultiComputerVisionService.Service.Application
 {
-    public class ResultDocumentService : IResultDocumentService
+    public class ServerSideResultDocumentService : IResultDocumentService
     {
         private readonly IResultRepositoryService resultRepositoryService;
 
-        public ResultDocumentService(IResultRepositoryService resultRepositoryService)
+        public ServerSideResultDocumentService(IResultRepositoryService resultRepositoryService)
         {
             this.resultRepositoryService = resultRepositoryService;
         }

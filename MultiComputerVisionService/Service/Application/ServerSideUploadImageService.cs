@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace MultiComputerVisionService.Service.Application
 {
-    public abstract class AbstractUploadService : IUploadImageService
+    public  class ServerSideUploadImageService : IUploadImageService
     {
         private readonly IResultRepositoryService resultRepositoryService;
 
@@ -14,7 +14,7 @@ namespace MultiComputerVisionService.Service.Application
         private readonly AwsImageDetectService awsImageDetectService;
         private readonly GcpImageDetectService gcpImageDetectService;
 
-        public AbstractUploadService(
+        public ServerSideUploadImageService(
             IResultRepositoryService resultRepositoryService,
             IUploadService uploadService,
             AzureImageDetectService azureImageDetectService,
@@ -30,9 +30,7 @@ namespace MultiComputerVisionService.Service.Application
             this.gcpImageDetectService = gcpImageDetectService;
         }
 
-        public abstract Task<IResultDocument> Upload(Stream content, string fileName, IPrincipal user);
-
-        protected async Task<IResultDocument> UploadInternal(Stream content, string fileName, IPrincipal user)
+        public async Task<IResultDocument> Upload(Stream content, string fileName, IPrincipal user)
         {
             var blob = await uploadService.UploadFile(content, fileName, true);
             var azureresult = await azureImageDetectService.Detect(blob.Uri.ToString());
