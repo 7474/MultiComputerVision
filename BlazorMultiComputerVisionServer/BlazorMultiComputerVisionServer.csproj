@@ -7,13 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Shared\**" />
-    <Content Remove="Shared\**" />
-    <EmbeddedResource Remove="Shared\**" />
-    <None Remove="Shared\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BlazorInputFile" Version="0.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.3" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.8.0" />
@@ -27,6 +20,10 @@
     <ProjectReference Include="..\MultiComputerVisionIdentityService\MultiComputerVisionIdentityService.csproj" />
     <ProjectReference Include="..\MultiComputerVisionRazorComponents\MultiComputerVisionRazorComponents.csproj" />
     <ProjectReference Include="..\MultiComputerVisionService\MultiComputerVisionService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
