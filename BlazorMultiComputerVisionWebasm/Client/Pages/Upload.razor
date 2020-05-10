@@ -44,7 +44,7 @@
                 // XXX 薄いラッパー作った方がいいかな。例示もされている。
                 // https://docs.microsoft.com/ja-jp/aspnet/core/security/blazor/webassembly/additional-scenarios?view=aspnetcore-3.1#attach-tokens-to-outgoing-requests
                 // XXX リクエストの型は共有プロジェクトにあった方がいい
-                var res = await Http.PostAsJsonAsync("Upload", new
+                var res = await Http.PostAsJsonAsync("Api/Upload", new
                 {
                     Name = rawFile.Name,
                     ImageDataUri = imageDataUri,
