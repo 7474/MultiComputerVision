@@ -53,7 +53,7 @@ else
         {
             try
             {
-                doc = await Http.GetFromJsonAsync<PlainResultDocument>($"ResultDocument/{Id}");
+                doc = await Http.GetFromJsonAsync<PlainResultDocument>($"Api/ResultDocument/{Id}");
                 title = doc.GetTitle();
                 description = doc.GetDescription();
             }

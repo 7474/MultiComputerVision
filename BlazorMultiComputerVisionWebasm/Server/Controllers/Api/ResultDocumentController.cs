@@ -7,11 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MultiComputerVisionService.Service;
 
-namespace BlazorMultiComputerVisionWebasm.Server.Controllers
+namespace BlazorMultiComputerVisionWebasm.Server.Controllers.Api
 {
-    //[Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("Api/[controller]")]
     public class ResultDocumentController : ControllerBase
     {
         private readonly ILogger<ResultDocumentController> logger;

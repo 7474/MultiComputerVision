@@ -10,11 +10,11 @@ using System.IO;
 using System.Text.RegularExpressions;
 using IdentityServer4.Extensions;
 
-namespace BlazorMultiComputerVisionWebasm.Server.Controllers
+namespace BlazorMultiComputerVisionWebasm.Server.Controllers.Api
 {
     [Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("Api/[controller]")]
     public class UploadController : ControllerBase
     {
         private readonly ILogger<UploadController> logger;

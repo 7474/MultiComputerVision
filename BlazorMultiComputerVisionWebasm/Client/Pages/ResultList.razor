@@ -92,7 +92,7 @@ else
             {
                 // ignore
             }
-            docs = await Http.GetFromJsonAsync<PlainResultDocument[]>($"ResultDocument?offset={offset.UtcTicks}");
+            docs = await Http.GetFromJsonAsync<PlainResultDocument[]>($"Api/ResultDocument?offset={offset.UtcTicks}");
             if (docs.Count > 0)
             {
                 next = docs.Max(x => x.CreatedAt);
