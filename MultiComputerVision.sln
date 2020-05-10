@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorMultiComputerVisionWe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiComputerVisionIdentityService", "MultiComputerVisionIdentityService\MultiComputerVisionIdentityService.csproj", "{8DD985CB-4EE6-453B-A7C8-7647CF5FF038}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiComputerVisionRazorComponents", "MultiComputerVisionRazorComponents\MultiComputerVisionRazorComponents.csproj", "{822D4022-09EF-45CC-AC87-570CDF73CA4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{8DD985CB-4EE6-453B-A7C8-7647CF5FF038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DD985CB-4EE6-453B-A7C8-7647CF5FF038}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DD985CB-4EE6-453B-A7C8-7647CF5FF038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{822D4022-09EF-45CC-AC87-570CDF73CA4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{822D4022-09EF-45CC-AC87-570CDF73CA4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{822D4022-09EF-45CC-AC87-570CDF73CA4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{822D4022-09EF-45CC-AC87-570CDF73CA4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

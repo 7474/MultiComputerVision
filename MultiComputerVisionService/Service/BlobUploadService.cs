@@ -1,6 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.StaticFiles;
+using MultiComputerVisionService.Models;
 using System;
 using System.IO;
 using System.Threading.Tasks;

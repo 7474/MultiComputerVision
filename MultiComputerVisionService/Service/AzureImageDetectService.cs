@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
+using MultiComputerVisionService.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

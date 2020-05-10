@@ -1,17 +1,19 @@
-﻿@page "/results"
+﻿@page "/"
 
-@inject IResultRepositoryService ResultRepositoryService
-@inject NavigationManager NavigationManager
+@inject IResultDocumentService ResultDocumentService
 
-<h1>判定結果</h1>
+<div class="jumbotron">
+    <h1>コンピュータの目</h1>
+    <p class="lead">その画像はコンピュータの目にはどのように映っているのでしょうか？　公平な目線で判断してくれます。</p>
+    <p class="lead">
+        <NavLink href="/upload" class="btn btn-primary">判断を仰ぎに行く</NavLink>
+    </p>
+</div>
 
+<h2>最近の判断結果</h2>
 @if (docs == null)
 {
     <p><em>Loading...</em></p>
-}
-else if (docs.Count == 0)
-{
-    <p><em>No more result.</em></p>
 }
 else
 {
@@ -26,7 +28,7 @@ else
     if (next < DateTimeOffset.MaxValue)
     {
         <p>
-            <NavLink href="@($"/results?offset={next.UtcTicks}")" class="btn btn-link" @onclick="OnNext">Next</NavLink>
+            <NavLink href="@($"/results?offset={next.UtcTicks}")" class="btn btn-link">More</NavLink>
         </p>
     }
 }
@@ -42,30 +44,11 @@ else
         await Load();
     }
 
-    private async Task OnNext()
-    {
-        NavigationManager.NavigateTo($"/results?offset={next.UtcTicks}", true);
-    }
-
     private async Task Load()
     {
         try
         {
-            DateTimeOffset offset = DateTimeOffset.MinValue;
-            try
-            {
-
-                var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
-                if (QueryHelpers.ParseNullableQuery(uri.Query).TryGetValue("offset", out var stringOffsets))
-                {
-                    offset = new DateTimeOffset(long.Parse(stringOffsets.First()), TimeSpan.Zero);
-                }
-            }
-            catch (Exception)
-            {
-                // ignore
-            }
-            docs = await ResultRepositoryService.GetResults(offset);
+            docs = await ResultDocumentService.GetResults(DateTimeOffset.MinValue);
             if (docs.Count > 0)
             {
                 next = docs.Max(x => x.CreatedAt);

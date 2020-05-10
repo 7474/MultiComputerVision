@@ -1,11 +1,7 @@
 ﻿@page "/upload"
 @attribute [Authorize]
 
-@inject IUploadService UploadService
-@inject AzureImageDetectService AzureImageDetectService
-@inject AwsImageDetectService AwsImageDetectService
-@inject GcpImageDetectService GcpImageDetectService
-@inject IResultRepositoryService ResultRepositoryService
+@inject IUploadImageService UploadService
 @inject NavigationManager NavigationManager
 
 <h1>コンピュータの目に判断を仰ぐ</h1>
@@ -37,13 +33,7 @@
             var user = authState.User;
             var file = files.First();
 
-            var blob = await UploadService.UploadFile(file.Data, file.Name, true);
-            var azureResult = await AzureImageDetectService.Detect(blob.Uri.ToString());
-            var awsResult = await AwsImageDetectService.Detect(blob.Uri.ToString());
-            var gcpResult = await GcpImageDetectService.Detect(blob.Uri.ToString());
-
-            var doc = ResultRepositoryService.BuildResult(user.Identity.Name, blob, new IImageDetectResult[] { azureResult, awsResult, gcpResult });
-            await ResultRepositoryService.Put(doc);
+            var doc = await UploadService.Upload(file.Data, file.Name, user);
 
             Message = "Complete!";
 

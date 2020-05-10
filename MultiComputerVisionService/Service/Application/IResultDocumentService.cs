@@ -3,12 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MultiComputerVisionService.Service
+namespace MultiComputerVisionService.Service.Application
 {
-    public interface IResultRepositoryService
+    public interface IResultDocumentService
     {
-        IResultDocument BuildResult(string ownerId, ICloudFile image, IEnumerable<IImageDetectResult> results);
-        Task Put(IResultDocument doc);
         Task<IResultDocument> GetResult(Guid id);
         // XXX 時刻だと妥当なオフセットにならない。Idをソート可能にするなどすると良いかも知れない。
         Task<IList<IResultDocument>> GetResults(DateTimeOffset offset);

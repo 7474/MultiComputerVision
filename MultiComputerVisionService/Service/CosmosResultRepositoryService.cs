@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.Cosmos;
 using Microsoft.Azure.Cosmos.Linq;
+using MultiComputerVisionService.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;

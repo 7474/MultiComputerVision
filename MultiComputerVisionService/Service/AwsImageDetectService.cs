@@ -2,6 +2,7 @@
 using Amazon.Rekognition;
 using Amazon.Rekognition.Model;
 using Amazon.Runtime;
+using MultiComputerVisionService.Models;
 using Newtonsoft.Json;
 using System;
 using System.Linq;

@@ -1,6 +1,6 @@
 ﻿@page "/resultlist"
 
-@inject IResultRepositoryService ResultRepositoryService
+@inject IResultDocumentService ResultDocumentService
 @inject NavigationManager NavigationManager
 
 <h1>情緒のない判定結果一覧</h1>
@@ -92,7 +92,7 @@ else
             {
                 // ignore
             }
-            docs = await ResultRepositoryService.GetResults(offset);
+            docs = await ResultDocumentService.GetResults(offset);
             if (docs.Count > 0)
             {
                 next = docs.Max(x => x.CreatedAt);

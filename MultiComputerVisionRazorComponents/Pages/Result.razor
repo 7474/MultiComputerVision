@@ -1,6 +1,6 @@
 ﻿@page "/results/{id}"
 
-@inject IResultRepositoryService ResultRepositoryService
+@inject IResultDocumentService ResultDocumentService
 
 <h1>@title</h1>
 
@@ -59,7 +59,7 @@ else
         {
             try
             {
-                doc = await ResultRepositoryService.GetResult(Guid.Parse(Id));
+                doc = await ResultDocumentService.GetResult(Guid.Parse(Id));
                 title = doc.GetTitle();
                 description = doc.GetDescription();
             }

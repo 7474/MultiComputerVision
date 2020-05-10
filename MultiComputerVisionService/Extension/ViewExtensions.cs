@@ -1,4 +1,5 @@
-﻿using MultiComputerVisionService.Service;
+﻿using MultiComputerVisionService.Models;
+using MultiComputerVisionService.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;

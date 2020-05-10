@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MultiComputerVisionService.Service;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
+using BlazorMultiComputerVisionServer.Service;
+using MultiComputerVisionService.Service.Application;
 
 namespace BlazorMultiComputerVisionServer
 {
@@ -60,6 +62,9 @@ namespace BlazorMultiComputerVisionServer
             services.AddSingleton(new GcpImageDetectService(
                 Configuration.GetValue<string>("GCP:JsonCredentials")
                 ));
+
+            services.AddSingleton<IResultDocumentService, ResultDocumentService>();
+            services.AddSingleton<IUploadImageService, UploadImageService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
