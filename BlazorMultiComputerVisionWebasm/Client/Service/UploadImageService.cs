@@ -32,7 +32,7 @@ namespace BlazorMultiComputerVisionWebasm.Client.Service
 
             var format = "image/jpeg";
             var ms = new MemoryStream();
-            content.CopyTo(ms);
+            await content.CopyToAsync(ms);
             var imageDataUri = $"data:{format};base64,{Convert.ToBase64String(ms.ToArray())}";
 
             var res = await httpClient.PostAsJsonAsync("Api/Upload", new
