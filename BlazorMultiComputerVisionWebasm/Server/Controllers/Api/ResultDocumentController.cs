@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MultiComputerVisionService.Models;
 using MultiComputerVisionService.Service;
 
 namespace BlazorMultiComputerVisionWebasm.Server.Controllers.Api

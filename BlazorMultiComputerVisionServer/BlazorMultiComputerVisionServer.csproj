@@ -18,7 +18,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MultiComputerVisionIdentityService\MultiComputerVisionIdentityService.csproj" />
+    <ProjectReference Include="..\MultiComputerVisionRazorComponents\MultiComputerVisionRazorComponents.csproj" />
     <ProjectReference Include="..\MultiComputerVisionService\MultiComputerVisionService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Service\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MultiComputerVisionService.Models;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -9,11 +10,5 @@ namespace MultiComputerVisionService.Service
         Task<ICloudFile> UploadFile(Stream content, string fileName, bool detectContentType);
         Task<ICloudFile> Upload(Stream content, string blobName, string contentType);
         ICloudFile GetInfo(string blobName);
-    }
-
-    public interface ICloudFile
-    {
-        string BlobName { get; }
-        Uri Uri { get; }
     }
 }

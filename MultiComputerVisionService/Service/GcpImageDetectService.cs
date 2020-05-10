@@ -1,4 +1,5 @@
 ﻿using Google.Cloud.Vision.V1;
+using MultiComputerVisionService.Models;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 

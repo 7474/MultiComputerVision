@@ -16,6 +16,10 @@ using MultiComputerVisionIdentityService.Models;
 using MultiComputerVisionService.Service;
 using Amazon;
 using Amazon.Runtime;
+using MultiComputerVisionService.Service.Application;
+using Toolbelt.Blazor.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Components.Server;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace BlazorMultiComputerVisionWebasm.Server
 {
@@ -52,6 +56,9 @@ namespace BlazorMultiComputerVisionWebasm.Server
                 Configuration.GetValue<string>("GCP:JsonCredentials")
                 ));
 
+            services.AddSingleton<IResultDocumentService, ServerSideResultDocumentService>();
+            services.AddSingleton<IUploadImageService, ServerSideUploadImageService>();
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -67,6 +74,12 @@ namespace BlazorMultiComputerVisionWebasm.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+            services.AddScoped<SignOutSessionStateManager>();
+            services.AddHeadElementHelper();
+
+            Client.Program.ConfigureCommonServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,6 +100,8 @@ namespace BlazorMultiComputerVisionWebasm.Server
 
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
+
+            app.UseHeadElementServerPrerendering();
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -99,7 +114,7 @@ namespace BlazorMultiComputerVisionWebasm.Server
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
+                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }

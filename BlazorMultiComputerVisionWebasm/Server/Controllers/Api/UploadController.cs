@@ -9,6 +9,7 @@ using MultiComputerVisionService.Service;
 using System.IO;
 using System.Text.RegularExpressions;
 using IdentityServer4.Extensions;
+using MultiComputerVisionService.Models;
 
 namespace BlazorMultiComputerVisionWebasm.Server.Controllers.Api
 {

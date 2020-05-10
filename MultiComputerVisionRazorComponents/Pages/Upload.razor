@@ -1,0 +1,47 @@
+﻿@page "/upload"
+@attribute [Authorize]
+
+@inject IUploadImageService UploadService
+@inject NavigationManager NavigationManager
+
+<h1>コンピュータの目に判断を仰ぐ</h1>
+<div class="alert alert-info" role="alert">
+    画像を選択すると判断してくれます。
+</div>
+<InputFile OnChange="HandleFileSelected" />
+<div>
+    <p>@Message</p>
+</div>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    System.IO.FileStream SelectedFileStream { set; get; }
+    double PercentageProgress { set; get; }
+    string Message { get; set; }
+
+    async Task HandleFileSelected(IFileListEntry[] files)
+    {
+        try
+        {
+            // TODO 画像サイズはノーマライズしたい
+            // TODO 画像以外はアップロード駄目だろう
+            // TODO ディレクトリ指定できた方が管理上良さそう
+            Message = "Processing...";
+            var authState = await authenticationStateTask;
+            var user = authState.User;
+            var file = files.First();
+
+            var doc = await UploadService.Upload(file.Data, file.Name, user);
+
+            Message = "Complete!";
+
+            NavigationManager.NavigateTo($"/results/{doc.Id.ToString()}");
+        }
+        catch (Exception ex)
+        {
+            Message = ex.Message + " ... " + ex.StackTrace;
+        }
+    }
+}
