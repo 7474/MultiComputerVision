@@ -1,0 +1,56 @@
+﻿<ContentPage @ref="contentPage">
+    <StackLayout Margin="8">
+        <Label Text="@Doc.GetTitle()"
+               FontAttributes="FontAttributes.Bold"
+               FontSize="30" />
+        <StackLayout>
+            <Grid>
+                <Layout>
+                    <ColumnDefinition GridUnitType="GridUnitType.Auto" />
+                    <ColumnDefinition GridUnitType="GridUnitType.Absolute" Width="120" />
+                    <ColumnDefinition GridUnitType="GridUnitType.Absolute" Width="120" />
+                </Layout>
+                <Contents>
+                    <GridCell Column="1">
+                        <Label Text="判定者" />
+                    </GridCell>
+                    <GridCell Column="2">
+                        <Label Text="性的？" />
+                    </GridCell>
+                    <GridCell Column="3">
+                        <Label Text="えっち？" />
+                    </GridCell>
+                </Contents>
+            </Grid>
+            @foreach (var result in Doc.Results)
+            {
+                <Grid>
+                    <Layout>
+                        <ColumnDefinition GridUnitType="GridUnitType.Auto" />
+                        <ColumnDefinition GridUnitType="GridUnitType.Absolute" Width="120" />
+                        <ColumnDefinition GridUnitType="GridUnitType.Absolute" Width="120" />
+                    </Layout>
+                    <Contents>
+                        <GridCell Column="1">
+                            <Label Text="@(result.Detector.GetNickName())" />
+                        </GridCell>
+                        <GridCell Column="2">
+                            <Label Text="@((result.IsAdultContent ? "❌" : "✔") + "（" + Math.Round(result.AdultScore * 100) + "点）")" />
+                        </GridCell>
+                        <GridCell Column="3">
+                            <Label Text="@((result.IsRacyContent ? "❌" : "✔") + "（" + Math.Round(result.RacyScore * 100) + "点）")" />
+                        </GridCell>
+                    </Contents>
+                </Grid>
+            }
+        </StackLayout>
+        <Label Text="Gさんは点数をつけてくれないようです。" />
+        <Image Source="Doc.Image.Uri" />
+    </StackLayout>
+</ContentPage>
+
+@code
+{
+    Microsoft.MobileBlazorBindings.Elements.ContentPage contentPage;
+    [Parameter] public IResultDocument Doc { get; set; }
+}

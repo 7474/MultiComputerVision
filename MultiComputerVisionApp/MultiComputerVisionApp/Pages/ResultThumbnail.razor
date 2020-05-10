@@ -1,0 +1,25 @@
+﻿
+<ImageButton Source="Doc.Image.Uri" OnClick="OnClickImage" />
+
+<ModalContainer @ref="resultDialog" OnClosed="OnDetailsClosed">
+    <Result Doc="Doc" />
+</ModalContainer>
+
+@code
+{
+    [Parameter] public IResultDocument Doc { get; set; }
+
+    ModalContainer resultDialog;
+
+    public void OnClickImage()
+    {
+        resultDialog.ShowDialog();
+    }
+
+    // XXX 今でもそうかは知らん。
+    // NOTE: This method shouldn't be needed and is a temporary workaround
+    public void OnDetailsClosed()
+    {
+        resultDialog.FinishClosingDialog();
+    }
+}
