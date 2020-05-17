@@ -20,6 +20,10 @@ using MultiComputerVisionService.Service.Application;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using IdentityServer4;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace BlazorMultiComputerVisionWebasm.Server
 {
@@ -69,8 +73,32 @@ namespace BlazorMultiComputerVisionWebasm.Server
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            // IdentityServer: https://identityserver4-ja.readthedocs.io/ja/latest/topics/signin_external_providers.html
+            // XamarinEssentials: https://docs.microsoft.com/ja-jp/mobile-blazor-bindings/advanced/xamarin-essentials?tabs=windows%2Candroid
+            // WebAuthenticator: https://docs.microsoft.com/ja-jp/xamarin/essentials/web-authenticator?tabs=android
+            // IdentityServer .net: https://docs.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-3.1#create-an-app-with-api-authorization-support
+            // Profile: https://github.com/dotnet/aspnetcore/issues/20248
+            services.AddAuthentication(o =>
+                {
+                    // https://identityserver4-ja.readthedocs.io/ja/latest/topics/signin_external_providers.html
+                    // https://docs.microsoft.com/ja-jp/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-3.1
+                    //AuthenticationBuilderExtensions
+                    // https://github.com/aspnet/Identity/blob/f56df64f7a30f677b7bbce159f04819436c9af51/src/ApiAuth.IS/Authentication/AuthenticationBuilderExtensions.cshttps://github.com/aspnet/Identity/blob/f56df64f7a30f677b7bbce159f04819436c9af51/src/ApiAuth.IS/Authentication/AuthenticationBuilderExtensions.cs
+                    //o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    //o.DefaultScheme = IdentityServerJwtConstants.IdentityServerJwtBearerScheme;
+                    //public const string IdentityServerJwtScheme = "IdentityServerJwt";
+                    //public const string IdentityServerJwtBearerScheme = "IdentityServerJwtBearer";
+                    //o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    //IdentityConstants.ApplicationScheme = Identity.Application
+                })
+                .AddIdentityServerJwt()
+                //.AddCookie()
+                //.AddIdentityCookies()
+                .AddCookie(o =>
+                {
+                    o.LoginPath = "/Identity/Account/Login";
+                })
+                ;
 
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -18,6 +18,7 @@ namespace MultiComputerVisionApp.Droid
 
             base.OnCreate(savedInstanceState);
 
+            // https://docs.microsoft.com/ja-jp/mobile-blazor-bindings/advanced/xamarin-essentials?tabs=windows%2Candroid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
@@ -28,6 +29,13 @@ namespace MultiComputerVisionApp.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            Xamarin.Essentials.Platform.OnResume();
         }
     }
 }

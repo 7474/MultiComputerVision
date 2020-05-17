@@ -43,8 +43,10 @@ async function onFetch(event) {
         // If you need some URLs to be server-rendered, edit the following check to exclude those URLs
         const shouldServeIndexHtml = event.request.mode === 'navigate'
             && !event.request.url.includes('/connect/')
-            && !event.request.url.includes('/Identity/');
-
+            && !event.request.url.includes('/Identity/')
+            && !event.request.url.includes('/Account/')
+            && !event.request.url.includes('/mobileauth');
+        
         const request = shouldServeIndexHtml ? 'index.html' : event.request;
         const cache = await caches.open(cacheName);
         cachedResponse = await cache.match(request);

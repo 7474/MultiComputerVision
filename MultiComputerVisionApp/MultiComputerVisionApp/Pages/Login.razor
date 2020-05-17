@@ -1,0 +1,29 @@
+﻿
+<StackLayout Orientation="StackOrientation.Horizontal">
+    <Button Text="Login" OnClick="OnLogin" />
+    <Button Text="Logout" OnClick="OnLogout" />
+</StackLayout>
+
+@code{
+    private async Task OnLogin()
+    {
+        //var baseUri = "https://blazormulticomputervisionwebasmserver.azurewebsites.net/";
+        var baseUri = "https://10.0.2.2:5001/";
+        var authScheme = "Cookies";
+        //var authScheme = "Identity.Application";
+        //var authScheme = "IdentityServerJwtBearer";
+        var authResult = await WebAuthenticator.AuthenticateAsync(
+new Uri($"{baseUri}mobileauth/{authScheme}"),
+new Uri("xamarinessentials://"));
+
+        System.Diagnostics.Debug.WriteLine(authResult);
+
+        var accessToken = authResult?.AccessToken;
+    }
+
+    private async Task OnLogout()
+    {
+        // T.B.D.
+        await Task.Delay(1);
+    }
+}
