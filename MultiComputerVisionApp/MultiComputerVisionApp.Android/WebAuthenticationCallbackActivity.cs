@@ -20,6 +20,6 @@ namespace MultiComputerVisionApp.Droid
     DataScheme = CALLBACK_SCHEME)]
     public class WebAuthenticationCallbackActivity : Xamarin.Essentials.WebAuthenticatorCallbackActivity
     {
-        const string CALLBACK_SCHEME = "xamarinessentials";
+        const string CALLBACK_SCHEME = "multicomputervision";
     }
 }

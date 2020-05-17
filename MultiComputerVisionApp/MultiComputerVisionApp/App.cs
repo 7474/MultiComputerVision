@@ -6,6 +6,7 @@ using Xamarin.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using MultiComputerVisionService.Service.Application;
 using MultiComputerVisionApp.Service;
+using MultiComputerVisionApp.Models;
 
 namespace MultiComputerVisionApp
 {
@@ -20,6 +21,8 @@ namespace MultiComputerVisionApp
                     //services.AddSingleton<AppState>();
                     services.AddSingleton(new AllowGuestHttpClient { BaseAddress = new Uri("https://blazormulticomputervisionwebasmserver.azurewebsites.net/") });
                     services.AddSingleton<IResultDocumentService, ResultDocumentService>();
+
+                    services.AddSingleton<AppState>();
                 })
                 .Build();
 

@@ -74,7 +74,7 @@ namespace BlazorMultiComputerVisionWebasm.Server
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             // IdentityServer: https://identityserver4-ja.readthedocs.io/ja/latest/topics/signin_external_providers.html
-            // XamarinEssentials: https://docs.microsoft.com/ja-jp/mobile-blazor-bindings/advanced/xamarin-essentials?tabs=windows%2Candroid
+            // multicomputervision: https://docs.microsoft.com/ja-jp/mobile-blazor-bindings/advanced/xamarin-essentials?tabs=windows%2Candroid
             // WebAuthenticator: https://docs.microsoft.com/ja-jp/xamarin/essentials/web-authenticator?tabs=android
             // IdentityServer .net: https://docs.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-3.1#create-an-app-with-api-authorization-support
             // Profile: https://github.com/dotnet/aspnetcore/issues/20248

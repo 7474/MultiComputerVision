@@ -24,7 +24,7 @@ namespace BlazorMultiComputerVisionWebasm.Server.Controllers
             this.logger = logger;
             this.userManager = userManager;
         }
-        const string callbackScheme = "xamarinessentials";
+        const string callbackScheme = "multicomputervision";
 
         [HttpGet("{scheme}")]
         public async Task Get([FromRoute]string scheme)
@@ -50,6 +50,7 @@ namespace BlazorMultiComputerVisionWebasm.Server.Controllers
                     k => qs[k] = auth.Properties.Items[k]
                 );
 
+                qs["Cookie"] = Request.Headers["Cookie"].FirstOrDefault()?.ToString();
                 qs["access_token"] = auth.Properties.GetTokenValue("access_token");
                 qs["refresh_token"] = auth.Properties.GetTokenValue("refresh_token") ?? string.Empty;
                 qs["expires"] = (auth.Properties.ExpiresUtc?.ToUnixTimeSeconds() ?? -1).ToString();
