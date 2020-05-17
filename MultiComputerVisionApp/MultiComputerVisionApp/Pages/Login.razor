@@ -9,8 +9,8 @@
     {
         //var baseUri = "https://blazormulticomputervisionwebasmserver.azurewebsites.net/";
         var baseUri = "https://10.0.2.2:5001/";
-        var authScheme = "Cookies";
-        //var authScheme = "Identity.Application";
+        //var authScheme = "Cookies";
+        var authScheme = "Identity.Application";
         //var authScheme = "IdentityServerJwtBearer";
         var authResult = await WebAuthenticator.AuthenticateAsync(
 new Uri($"{baseUri}mobileauth/{authScheme}"),

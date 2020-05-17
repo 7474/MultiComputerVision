@@ -30,49 +30,29 @@ namespace BlazorMultiComputerVisionWebasm.Server.Controllers
         public async Task Get([FromRoute]string scheme)
         {
             var auth = await Request.HttpContext.AuthenticateAsync(scheme);
-            var jwtAuth = await Request.HttpContext.AuthenticateAsync(IdentityServerJwtConstants.IdentityServerJwtScheme);
-            var appAuth = await Request.HttpContext.AuthenticateAsync(IdentityConstants.ApplicationScheme);
-            var access_token = await Request.HttpContext.GetTokenAsync(IdentityConstants.ApplicationScheme, OpenIdConnectParameterNames.AccessToken);
-            var refresh_token = await Request.HttpContext.GetTokenAsync(IdentityConstants.ApplicationScheme, OpenIdConnectParameterNames.RefreshToken);
-            var expires = await Request.HttpContext.GetTokenAsync(IdentityConstants.ApplicationScheme, OpenIdConnectParameterNames.ExpiresIn);
-            if (auth != null && auth.Principal != null)
-            {
-                var user = await userManager.GetUserAsync(auth.Principal);
-            }
-            //var token = await userManager.GetAuthenticationTokenAsync(user, )
-            //logger.LogDebug(JsonConvert.SerializeObject(auth, Formatting.Indented));
 
             if (!auth.Succeeded
                 || auth?.Principal == null
                 || !auth.Principal.Identities.Any(id => id.IsAuthenticated)
-                || string.IsNullOrEmpty(auth.Properties.GetTokenValue("access_token")))
+                // XXX アクセストークンの取り方がイマイチ分からない。
+                // Profile NativeApp のサポートが厚くなったら再考しよう。
+                //|| string.IsNullOrEmpty(auth.Properties.GetTokenValue("access_token"))
+                )
             {
                 // Not authenticated, challenge
-                //await Request.HttpContext.ChallengeAsync(scheme);
-                if (scheme == "Cookies")
-                {
-                    var authProps = new AuthenticationProperties(); 
-                    authProps.SetParameter("response_mode", "query");
-                    authProps.SetParameter("response_type", "id_token token");
-                    authProps.SetParameter("client_id", "MultiComputerVisionApp");
-                    authProps.SetParameter("scope", "BlazorMultiComputerVisionWebasm.ServerAPI openid profile");
-
-                    await Request.HttpContext.ChallengeAsync(scheme, authProps);
-                }
-                else
-                {
-                    await Request.HttpContext.ChallengeAsync(scheme);
-                }
+                await Request.HttpContext.ChallengeAsync(scheme);
             }
             else
             {
                 // Get parameters to send back to the callback
-                var qs = new Dictionary<string, string>
-            {
-                { "access_token", auth.Properties.GetTokenValue("access_token") },
-                { "refresh_token", auth.Properties.GetTokenValue("refresh_token") ?? string.Empty },
-                { "expires", (auth.Properties.ExpiresUtc?.ToUnixTimeSeconds() ?? -1).ToString() }
-            };
+                var qs = new Dictionary<string, string>();
+                auth.Properties.Items.Keys.ToList().ForEach(
+                    k => qs[k] = auth.Properties.Items[k]
+                );
+
+                qs["access_token"] = auth.Properties.GetTokenValue("access_token");
+                qs["refresh_token"] = auth.Properties.GetTokenValue("refresh_token") ?? string.Empty;
+                qs["expires"] = (auth.Properties.ExpiresUtc?.ToUnixTimeSeconds() ?? -1).ToString();
 
                 // Build the result url
                 var url = callbackScheme + "://#" + string.Join(
