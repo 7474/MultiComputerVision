@@ -1,0 +1,58 @@
+﻿@inject IResultDocumentService ResultDocumentService
+
+<StackLayout>
+    @if (docs == null)
+    {
+        <Label Text="Loading..." />
+    }
+    else
+    {
+        <ScrollView>
+            <StackLayout>
+                @foreach (var doc in docs)
+                {
+                    <ResultThumbnail Doc="doc" />
+                }
+            </StackLayout>
+        </ScrollView>
+        if (next < DateTimeOffset.MaxValue)
+        {
+            <Label Text="Next(T.B.D.)" />
+        }
+    }
+    <Label Text="@message" />
+</StackLayout>
+
+@code {
+    ICollection<IResultDocument> docs { get; set; }
+    DateTimeOffset next { get; set; }
+    string message { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        message = "Now loading docs...";
+        try
+        {
+            docs = await ResultDocumentService.GetResults(DateTimeOffset.MinValue);
+            if (docs.Count > 0)
+            {
+                next = docs.Max(x => x.CreatedAt);
+            }
+            else
+            {
+                next = DateTimeOffset.MaxValue;
+            }
+            message = "Load Complete!";
+        }
+        catch (Exception ex)
+        {
+            // XXX 500放れるといい
+            message = ex.Message + " ... " + ex.StackTrace;
+        }
+    }
+}

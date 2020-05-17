@@ -1,0 +1,17 @@
+﻿
+
+### SPAのログインURL
+
+https://localhost:5001/Identity/Account/Login?ReturnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fclient_id%3DBlazorMultiComputerVisionWebasm.Client%26redirect_uri%3Dhttps%253A%252F%252Flocalhost%253A5001%252Fauthentication%252Flogin-callback%26response_type%3Dcode%26scope%3DBlazorMultiComputerVisionWebasm.ServerAPI%2520openid%2520profile%26state%3D13a1ef9da2be4593b7b4675ccaafe0e3%26code_challenge%3DDK82ihiJds5rDXrG_P1nMgU79G_OJ69wAeNR3qHuQPs%26code_challenge_method%3DS256%26response_mode%3Dquery
+
+```
+ReturnUrl=/connect/authorize/callback?
+client_id=BlazorMultiComputerVisionWebasm.Client
+redirect_uri=https://localhost:5001/authentication/login-callback
+response_type=code
+scope=BlazorMultiComputerVisionWebasm.ServerAPI openid profile
+state=13a1ef9da2be4593b7b4675ccaafe0e3
+code_challenge=DK82ihiJds5rDXrG_P1nMgU79G_OJ69wAeNR3qHuQPs
+code_challenge_method=S256
+response_mode=query
+```

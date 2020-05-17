@@ -1,0 +1,24 @@
+﻿@using Microsoft.MobileBlazorBindings.Elements
+@inject AppState AppState
+
+<StackLayout>
+    <Label Text="@(isLogged ? "Logged": "-")" />
+    <StackLayout Orientation="StackOrientation.Horizontal">
+        <Button Text="Login" OnClick="OnLogin" />
+        <Button Text="Logout" OnClick="OnLogout" />
+    </StackLayout>
+</StackLayout>
+
+@code{
+    private bool isLogged => AppState.Auth != null;
+
+    private async Task OnLogin()
+    {
+        await AppState.LoginAsync();
+    }
+
+    private async Task OnLogout()
+    {
+        await AppState.LogoutAsync();
+    }
+}
