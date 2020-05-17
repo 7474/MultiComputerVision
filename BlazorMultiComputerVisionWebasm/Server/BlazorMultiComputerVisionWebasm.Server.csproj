@@ -32,8 +32,4 @@
     </Content>
   </ItemGroup>
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="del  C:\MultiComputerVision\BlazorMultiComputerVisionWebasm\Client\obj\Debug\netstandard2.1\blazor\serviceworkers\wwwroot\service-worker.js" />
-  </Target>
-
 </Project>
