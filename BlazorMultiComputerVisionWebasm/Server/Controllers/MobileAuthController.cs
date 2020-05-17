@@ -29,16 +29,15 @@ namespace BlazorMultiComputerVisionWebasm.Server.Controllers
         [HttpGet("{scheme}")]
         public async Task Get([FromRoute]string scheme)
         {
-            var schemeAuth = await Request.HttpContext.AuthenticateAsync(scheme);
+            var auth = await Request.HttpContext.AuthenticateAsync(scheme);
             var jwtAuth = await Request.HttpContext.AuthenticateAsync(IdentityServerJwtConstants.IdentityServerJwtScheme);
-            var auth = await Request.HttpContext.AuthenticateAsync(IdentityConstants.ApplicationScheme);
+            var appAuth = await Request.HttpContext.AuthenticateAsync(IdentityConstants.ApplicationScheme);
             var access_token = await Request.HttpContext.GetTokenAsync(IdentityConstants.ApplicationScheme, OpenIdConnectParameterNames.AccessToken);
             var refresh_token = await Request.HttpContext.GetTokenAsync(IdentityConstants.ApplicationScheme, OpenIdConnectParameterNames.RefreshToken);
             var expires = await Request.HttpContext.GetTokenAsync(IdentityConstants.ApplicationScheme, OpenIdConnectParameterNames.ExpiresIn);
             if (auth != null && auth.Principal != null)
             {
                 var user = await userManager.GetUserAsync(auth.Principal);
-                var token = await userManager.Token
             }
             //var token = await userManager.GetAuthenticationTokenAsync(user, )
             //logger.LogDebug(JsonConvert.SerializeObject(auth, Formatting.Indented));

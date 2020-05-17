@@ -78,22 +78,14 @@ namespace BlazorMultiComputerVisionWebasm.Server
             // WebAuthenticator: https://docs.microsoft.com/ja-jp/xamarin/essentials/web-authenticator?tabs=android
             // IdentityServer .net: https://docs.microsoft.com/ja-jp/aspnet/core/security/authentication/identity-api-authorization?view=aspnetcore-3.1#create-an-app-with-api-authorization-support
             // Profile: https://github.com/dotnet/aspnetcore/issues/20248
-            services.AddAuthentication(o =>
-                {
-                    // https://identityserver4-ja.readthedocs.io/ja/latest/topics/signin_external_providers.html
-                    // https://docs.microsoft.com/ja-jp/aspnet/core/security/authorization/limitingidentitybyscheme?view=aspnetcore-3.1
-                    //AuthenticationBuilderExtensions
-                    // https://github.com/aspnet/Identity/blob/f56df64f7a30f677b7bbce159f04819436c9af51/src/ApiAuth.IS/Authentication/AuthenticationBuilderExtensions.cshttps://github.com/aspnet/Identity/blob/f56df64f7a30f677b7bbce159f04819436c9af51/src/ApiAuth.IS/Authentication/AuthenticationBuilderExtensions.cs
-                    //o.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    //o.DefaultScheme = IdentityServerJwtConstants.IdentityServerJwtBearerScheme;
-                    //public const string IdentityServerJwtScheme = "IdentityServerJwt";
-                    //public const string IdentityServerJwtBearerScheme = "IdentityServerJwtBearer";
-                    //o.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                    //IdentityConstants.ApplicationScheme = Identity.Application
-                })
+            services.AddAuthentication()
                 .AddIdentityServerJwt()
-                //.AddCookie()
-                //.AddIdentityCookies()
+                .AddTwitter(twitterOptions =>
+                {
+                    twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerAPIKey"];
+                    twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"];
+                    twitterOptions.RetrieveUserDetails = true;
+                })
                 .AddCookie(o =>
                 {
                     o.LoginPath = "/Identity/Account/Login";
