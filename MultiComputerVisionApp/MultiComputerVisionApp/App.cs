@@ -6,7 +6,6 @@ using Xamarin.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using MultiComputerVisionService.Service.Application;
 using MultiComputerVisionApp.Service;
-using MultiComputerVisionApp.Models;
 
 namespace MultiComputerVisionApp
 {

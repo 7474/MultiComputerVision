@@ -1,17 +1,18 @@
 ﻿using Google.Api;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
-namespace MultiComputerVisionApp.Models
+namespace MultiComputerVisionApp
 {
     // https://github.com/xamarin/MobileBlazorBindings/blob/master/samples/MobileBlazorBindingsTodoSample/MobileBlazorBindingsTodo/AppState.cs
     public class AppState
     {
-        //var baseUri = "https://blazormulticomputervisionwebasmserver.azurewebsites.net/";
-        private readonly string baseUri = "https://10.0.2.2:5001/";
+        private readonly string baseUri = "https://blazormulticomputervisionwebasmserver.azurewebsites.net/";
+        //private readonly string baseUri = "https://10.0.2.2:5001/";
         private readonly string authScheme = "Identity.Application";
 
         private WebAuthenticatorResult auth;
@@ -21,6 +22,7 @@ namespace MultiComputerVisionApp.Models
             this.auth = auth;
             await NotifyStateChanged();
         }
+        public bool IsLogged => Auth != null;
 
         public async Task LoginAsync()
         {
@@ -41,7 +43,7 @@ namespace MultiComputerVisionApp.Models
         {
             if (Auth != null)
             {
-                return Auth.Properties["Cookie"];
+                return WebUtility.UrlDecode(Auth.Properties["Cookie"]);
             }
             return null;
         }
@@ -63,7 +65,8 @@ namespace MultiComputerVisionApp.Models
 
         public event Func<Task> OnChange;
 
-        private async Task NotifyStateChanged() {
+        private async Task NotifyStateChanged()
+        {
             if (OnChange != null)
             {
                 await OnChange.Invoke();

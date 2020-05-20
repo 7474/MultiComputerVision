@@ -2,7 +2,7 @@
 @inject AppState AppState
 
 <StackLayout>
-    <Label Text="@(isLogged ? "Logged": "-")" />
+    <Label Text="@(AppState.IsLogged ? "Logged": "-")" />
     <StackLayout Orientation="StackOrientation.Horizontal">
         <Button Text="Login" OnClick="OnLogin" />
         <Button Text="Logout" OnClick="OnLogout" />
@@ -10,8 +10,6 @@
 </StackLayout>
 
 @code{
-    private bool isLogged => AppState.Auth != null;
-
     private async Task OnLogin()
     {
         await AppState.LoginAsync();
