@@ -22,6 +22,7 @@ namespace MultiComputerVisionApp
                     services.AddSingleton(new AllowGuestHttpClient { BaseAddress = new Uri("https://blazormulticomputervisionwebasmserver.azurewebsites.net/") });
                     services.AddSingleton<IResultDocumentService, ResultDocumentService>();
 
+                    services.AddSingleton<IIdentityService, IdentityService>();
                     services.AddSingleton<AppState>();
                 })
                 .Build();

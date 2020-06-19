@@ -1,9 +1,12 @@
 ﻿using Google.Api;
+using IdentityModel.Client;
+using MultiComputerVisionApp.Service;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace MultiComputerVisionApp.Models
 {
@@ -13,6 +16,50 @@ namespace MultiComputerVisionApp.Models
         //var baseUri = "https://blazormulticomputervisionwebasmserver.azurewebsites.net/";
         private readonly string baseUri = "https://10.0.2.2:5001/";
         private readonly string authScheme = "Identity.Application";
+
+        private readonly IIdentityService identityService;
+        private readonly WebView webView;
+
+        public string AuthAccessToken { get; private set; }
+        public string AuthIdToken { get; private set; }
+
+        public AppState(IIdentityService identityService)
+        {
+            this.identityService = identityService;
+            this.webView = new WebView();
+
+            webView.On<Android>().Element.Navigating += OnNavigating;
+            webView.On<iOS>().Element.Navigating += OnNavigating;
+            webView.On<Windows>().Element.Navigating += OnNavigating;
+        }
+        private void OnNavigating(object sender, WebNavigatingEventArgs e)
+        {
+            var url = e.Url;
+
+            var unescapedUrl = System.Net.WebUtility.UrlDecode(url);
+
+            if (identityService.IsLogoutCallback(unescapedUrl))
+            {
+                AuthAccessToken = string.Empty;
+                AuthIdToken = string.Empty;
+            }
+            else if (identityService.IsLoginCallback(unescapedUrl))
+            {
+                var authResponse = new AuthorizeResponse(url);
+
+                if (!string.IsNullOrWhiteSpace(authResponse.AccessToken))
+                {
+                    if (authResponse.AccessToken != null)
+                    {
+                        AuthAccessToken = authResponse.AccessToken;
+                        AuthIdToken = authResponse.IdentityToken;
+
+                        //await NavigationService.NavigateToAsync<MainViewModel>();
+                        //await NavigationService.RemoveLastFromBackStackAsync();
+                    }
+                }
+            }
+        }
 
         private WebAuthenticatorResult auth;
         public WebAuthenticatorResult Auth => auth;
@@ -24,11 +71,14 @@ namespace MultiComputerVisionApp.Models
 
         public async Task LoginAsync()
         {
-            var authResult = await WebAuthenticator.AuthenticateAsync(
-                new Uri($"{baseUri}mobileauth/{authScheme}"),
-                new Uri("multicomputervision://"));
+            //var authResult = await WebAuthenticator.AuthenticateAsync(
+            //    new Uri($"{baseUri}mobileauth/{authScheme}"),
+            //    new Uri("multicomputervision://"));
 
-            await SetAuthAsync(authResult);
+            //await SetAuthAsync(authResult);
+
+            var a = identityService.CreateAuthorizationRequest();   
+
         }
 
         public async Task LogoutAsync()
@@ -63,7 +113,8 @@ namespace MultiComputerVisionApp.Models
 
         public event Func<Task> OnChange;
 
-        private async Task NotifyStateChanged() {
+        private async Task NotifyStateChanged()
+        {
             if (OnChange != null)
             {
                 await OnChange.Invoke();

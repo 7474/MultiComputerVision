@@ -24,6 +24,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using IdentityServer4;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using IdentityServer4.Models;
+using System.Collections.Generic;
 
 namespace BlazorMultiComputerVisionWebasm.Server
 {
@@ -91,6 +93,33 @@ namespace BlazorMultiComputerVisionWebasm.Server
                     o.LoginPath = "/Identity/Account/Login";
                 })
                 ;
+            //ClientBuilder.NativeApp
+            // Ref. ClientBuilder.NativeAppClientRedirectUri 
+            const string NativeAppClientRedirectUri = "urn:ietf:wg:oauth:2.0:oob";
+            var xamarinClient = new IdentityServer4.Models.Client()
+            {
+                ClientId = "MultiComputerVisionApp",
+                ClientName = "MultiComputerVisionApp Xamarin OpenId Client",
+                //AllowedGrantTypes = GrantTypes.Hybrid,
+                AllowedGrantTypes = GrantTypes.Code,
+                //ClientSecrets =
+                //{
+                //    new  Secret("secret".Sha256())
+                //},
+                RedirectUris = { NativeAppClientRedirectUri },
+                RequireConsent = false,
+                RequirePkce = true,
+                PostLogoutRedirectUris = { NativeAppClientRedirectUri },
+                //AllowedCorsOrigins = { "http://eshopxamarin" },
+                AllowedScopes = new List<string>
+                {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile,
+                    IdentityServerConstants.StandardScopes.OfflineAccess
+                },
+                AllowOfflineAccess = true,
+                //AllowAccessTokensViaBrowser = true
+            };
 
             services.AddControllersWithViews();
             services.AddRazorPages();
