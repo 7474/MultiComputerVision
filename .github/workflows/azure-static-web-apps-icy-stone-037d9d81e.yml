@@ -23,7 +23,7 @@ jobs:
       　with:
           dotnet-version: '3.1.x'
     　- name: Build Blazor Application
-      　run: dotnet publish -c Release ./BlazorMultiComputerVisionWebasm/Client/BlazorMultiComputerVisionWebasm.Client.csproj
+      　run: dotnet publish -c Release -p:DefineConstants=AZURE_STATIC_WEB_APP ./BlazorMultiComputerVisionWebasm/Client/BlazorMultiComputerVisionWebasm.Client.csproj
       - name: Deploy
         id: deploy
         uses: Azure/static-web-apps-deploy@v0.0.1-preview
