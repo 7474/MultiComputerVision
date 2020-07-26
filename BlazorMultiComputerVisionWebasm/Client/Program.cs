@@ -24,7 +24,12 @@ namespace BlazorMultiComputerVisionWebasm.Client
             // XXX これだと認証されたユーザーのリクエストからもパラメータが無くなっちゃうんだよね。困るね。
             builder.Services.AddSingleton(new AllowGuestHttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddHttpClient<AuthHttpClient>("BlazorMultiComputerVisionWebasm.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+#if AZURE_STATIC_WEB_APP
+            var apiBase = new Uri("https://blazormulticomputervisionwebasmserver.azurewebsites.net/");
+#else
+            var apiBase = new Uri(builder.HostEnvironment.BaseAddress);
+#endif
+            builder.Services.AddHttpClient<AuthHttpClient>("BlazorMultiComputerVisionWebasm.ServerAPI", client => client.BaseAddress = apiBase)
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             // Supply HttpClient instances that include access tokens when making requests to the server project
