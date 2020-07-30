@@ -65,7 +65,7 @@ namespace MultiComputerVisionService.Service
                 .OrderByDescending(x => x.CreatedAt)
                 .ToFeedIterator()
                 .ReadNextAsync();
-            return res.Select(x => x as IResultDocument).ToList();
+            return res.Select(x => x as IResultDocument).Where(x => x != null && x.Image != null).ToList();
         }
     }
 
